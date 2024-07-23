@@ -25,7 +25,7 @@ public:
     void setDimension(const std::vector<std::vector<int>> mapData);
 
     void printMap() const;
-    void loadMap(const std::string& filename);
+    bool loadMap(const std::string& filename);
 
 
 };
