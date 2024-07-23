@@ -6,24 +6,28 @@
 #include <string>
 
 
-// work on tug of war
+// player
     class Player{
 
         private:
-            std::string 
+            std::string name; 
             int score;
-            vector <string> items; 
+            std::vector<std::vector<std::string>> playerItems; 
 
 
         public:
-            // Setter 
-            void setScore(int s){
-                score = s;
-            }
-            // Getter
-            int getscore()
-            
-            
+            Player();
+            Player(const std::string& name, int score, const std::string&playerItems);
+            ~Player();
+
+            std::string getName() const;
+            int getScore() const;
+            std::vector<std::vector<int>> getPlayerItems() const;
+
+            void setName(const std::string& name);
+            void setScore(int score);
+            void setDimension(const std::vector<std::vector<int>> playerItems);
+      
     };
 
 
