@@ -6,20 +6,30 @@ using namespace std;
 
 Map::Map() : name (""), mapNum(0) {}
 
-Map::Map(const string& name, int mapNum)
-    : name(name), mapNum(mapNum) {}
+Map::Map(const string& name, int mapNum, const std::string& filename)
+    : name(name), mapNum(mapNum) { loadMap(filename); }
 
 Map::~Map() {}
 
 string Map::getName() const { return name; }
 int Map::getMapNum() const { return mapNum; }
-vector<vector<int>> Map::getMapData() const { return mapData; }
+vector<vector<char>> Map::getMapData() const { return mapData; }
 
 void Map::setName(const string& name) { this->name = name; }
 void Map::setMapNum(int mapNum) { this->mapNum = mapNum; }
-void Map::setDimension(const vector<vector<int>> mapData) {this->mapData = mapData;}
+void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = mapData; }
 
-// void printMap() const
+void Map::printMap() const
+{
+    for (const vector<char>& row : mapData)
+    {
+        for (const char& cell : row)
+        {
+            cout << cell;
+        }
+        cout << endl;
+    }
+}
 
 bool Map::loadMap(const string& filename)
 {
@@ -31,11 +41,11 @@ bool Map::loadMap(const string& filename)
     }
 
     string line;
-    vector<vector<int>> tempMap;
+    vector<vector<char>> tempMap;
 
     while (getline(file, line))
     {
-        vector<int> row;
+        vector<char> row;
         for (char c : line)
         {
             if (c == '.' || c == 'O')
