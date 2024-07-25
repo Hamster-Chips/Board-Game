@@ -49,10 +49,14 @@ bool Map::loadMap(const string& filename)
         for (char c : line)
         {
             if (c == '.' || c == 'O')
+            {
                 row.push_back(c);
+            }
             else
+            {
                 cerr << "Unexpected character in map file: " << c << endl;
                 return false;
+            }
         }
         tempMap.push_back(row);
     }
