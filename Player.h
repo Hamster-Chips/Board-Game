@@ -7,16 +7,27 @@
 using namespace std;
 
 
-// work on tug of war
+// create 
     class Player{
 
         public:
-            Player(string name);
+            Player();
+            void set_name(string n);
+            string get_name();
+            void set_score(int score);
+            int get_score();
+            void add_items(string item);
+
+            friend ostream& operator<<(ostream&, Player P1);
+
+
+
+        private:
             string _name;
-            int _score
+            int _score;
             vector <string> _items;    
-            
-    }
+
+    };
 
 
 
