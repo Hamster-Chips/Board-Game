@@ -21,6 +21,7 @@ void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = map
 
 void Map::printMap() const
 {
+    cout << widthX << ", " << lengthY << endl;
     for (const vector<char>& row : mapData)
     {
         for (const char& cell : row)
@@ -33,6 +34,9 @@ void Map::printMap() const
 
 bool Map::loadMap(const string& filename)
 {
+    widthX= 0;
+    lengthY = 0;
+
     ifstream file(filename);
     if (!file.is_open())
     {
@@ -42,7 +46,6 @@ bool Map::loadMap(const string& filename)
 
     string line;
     vector<vector<char>> tempMap;
-
     while (getline(file, line))
     {
         vector<char> row;
@@ -50,6 +53,7 @@ bool Map::loadMap(const string& filename)
         {
             if (c == '.' || c == 'O')
             {
+                widthX += 1;
                 row.push_back(c);
             }
             else
@@ -58,9 +62,11 @@ bool Map::loadMap(const string& filename)
                 return false;
             }
         }
+        lengthY += 1;
         tempMap.push_back(row);
     }
-
+    
+    widthX /= lengthY;
     mapData = tempMap;
     file.close();
     return true;

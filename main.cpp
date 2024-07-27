@@ -1,5 +1,4 @@
 #include <iostream> 
-#include <fstream>
 #include "map.h"
 #include "enemy.h"
 
@@ -30,4 +29,9 @@ int main()
     wack2.printEnemy();
 
 
+}
+
+void setMap(const string& name, int mapNum, const string& revealMap)
+{
+    Map myMap(name, 3, "map3.txt");
 }

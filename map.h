@@ -9,6 +9,8 @@ class Map
 private:
     std::string name;
     int mapNum;
+    int widthX;
+    int lengthY;
     std::vector<std::vector<char>> mapData;
 
 public:
@@ -26,8 +28,6 @@ public:
 
     void printMap() const;
     bool loadMap(const std::string& filename);
-
-
 };
 
 #endif
