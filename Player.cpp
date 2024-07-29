@@ -1,88 +1,49 @@
+#include "player.h"
+#include <iostream>
+#include <fstream>
 
-#include <iostream> 
-using namespace std;
-#include "Player.h"
-#include <string>
-using namespace std;
+using namespace std; 
+
+Player::Player() : name(""), score(0), playerItems() {}
+
+Player::Player(const string& name, int score, const vector<string>& playerItems)
+       : name(name), score(score), playerItems(playerItems) {};
+
+Player::~Player() {}
+
+string Player::getName() const { return name; }
+int Player::getScore() const { return score; }
+vector<string> Player::getPlayerItems() const { return playerItems; }
+
+void Player::setName(const string& name) { this->name = name; }
+void Player::setScore(int score) { this->score = score; }
+void Player::setPlayerItems(const vector<string>& items) { this-> playerItems = items;}
+
+void Player::add_items(const string& PlayerItems){
 
 
-
-//default constructor
-Player::Player(){
-    _name = "";
-    _score = 0;
-    _items = {};
 }
 
-//setter & getter for player name
-void Player:: set_name(string name){
-    _name = name;
-}
 
-string Player::get_name(){
-    return _name;
-}
+int main()
+{
+    vector<string> lays ({"BOO", "hi"});
+    Player player1;
+    player1.setName("Jorge");
+    player1.setScore(0);
+    player1.setPlayerItems(lays);
+    player1.add_items("hi");
 
-
-//setter & getter for player score
-void Player::set_score(int score){
-    _score = score;
-}
-
-int Player::get_score(){
-    return _score;
-}
-
-void Player::add_items(string item){
-    _items.push_back(item);
-}
-
-ostream& operator<<(ostream& out, Player P1){
-    //cout << "YOOOOO" << endl;
-    out << "Player: " << P1._name << "\n"<< "Score: " << P1._score << "\n" << "Items: ";
-
-    //cout << P1._items.size() << endl;
-    for (int i = 0; i < P1._items.size(); i++){
-        
-        if (i < P1._items.size()-1){
-            out << P1._items[i] << ", " ;
-        } else {
-            out << P1._items[i] << endl;
-        }
-    }
-
-    return out;
+    cout << "player Name: " << player1.getName() << endl;
+    cout << "player score: " << player1.getScore() << endl;
+    cout << "player items: ";
+    for (const string items: player1.getPlayerItems()){
+        cout<< items << " ";
     }
 
 
 
 
+    return 0; 
 
-
-//FIX CODE SO IT CAN PRINT MULTIPLE PLAYERS and print items from item vector
-
-
-
-
-
-
-int main(){
-    //test
-    Player mclaren = Player();
-    mclaren.set_name("Mac");
-    mclaren.set_score(1000);
-    mclaren.add_items("MP4-12C");
-    
-    Player lebron = Player();
-    lebron.set_name("James");
-    lebron.set_score(23);
-
-    
-    lebron.add_items("legoat");
-    lebron.add_items("BRONBRON");
-
-
-    //cout << mclaren << endl;
-    cout << lebron << endl;
-    cout << mclaren << endl;
 }
