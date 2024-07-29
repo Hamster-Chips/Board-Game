@@ -4,8 +4,8 @@
 using namespace std;
 
 Enemy::Enemy() : name (""), health (0), startX (-1), startY (-1) {}
-Enemy::Enemy(const std::string& name, int health, vector<string>& reward)
-    : name(name), health(health), reward(reward) {}
+Enemy::Enemy(const std::string& name, int health, vector<string>& reward, int startX, int startY)
+    : name(name), health(health), reward(reward), startX(startX), startY(startY) {}
 Enemy::~Enemy(){}
 
 string Enemy::getName() { return name; }

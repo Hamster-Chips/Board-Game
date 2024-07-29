@@ -13,23 +13,6 @@ using namespace std;
 int main()
 {
     cout << "Hello World!" << endl;
-
-    Map map1("Wack name", 0, "map1.txt");
-    map1.printMap();
-    map1.loadMap("map2.txt");
-    map1.printMap();
-
-    Enemy wack;
-    wack.setName("Wawaawa");
-    wack.setHealth(69);
-    vector<string> wack2Stuff = {"sad", "depressed"};
-    wack.setReward(wack2Stuff);
-    Enemy wack2("Nabu", 100, wack2Stuff);
-
-    wack.printEnemy();
-    wack2.printEnemy();
-
-
 }
 
 void setMap(const string& name, int mapNum, const string& pathMap)
@@ -56,7 +39,7 @@ void setMap(const string& name, int mapNum, const string& pathMap)
         {
             if (c == '@')
             {
-                Enemy newEnemy("wack", 10, rewards);
+                Enemy newEnemy("wack", 10, rewards, x, y);
                 enemies.push_back(newEnemy);
             }
             x += 1;
@@ -64,7 +47,5 @@ void setMap(const string& name, int mapNum, const string& pathMap)
         y += 1;
         x = 0;
     }
-
-    // Maybe create a struct to hold all info of the map or store it in the enemy and/or map class
     
 }

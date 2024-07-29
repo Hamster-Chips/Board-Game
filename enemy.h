@@ -16,7 +16,7 @@ private:
 
 public:
     Enemy();
-    Enemy(const std::string& name, int health, std::vector<std::string>& reward);
+    Enemy(const std::string& name, int health, std::vector<std::string>& reward, int startX, int startY);
     ~Enemy();
 
     std::string getName();
