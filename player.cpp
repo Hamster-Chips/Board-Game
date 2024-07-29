@@ -19,6 +19,11 @@ void Player::setName(const string& name) { this->name = name; }
 void Player::setScore(int score) { this->score = score; }
 void Player::setPlayerItems(const vector<string>& items) { this-> playerItems = items;}
 
+void Player::add_items(const string& PlayerItems){
+
+
+}
+
 
 int main()
 {
@@ -27,6 +32,7 @@ int main()
     player1.setName("Jorge");
     player1.setScore(0);
     player1.setPlayerItems(lays);
+    player1.add_items("hi");
 
     cout << "player Name: " << player1.getName() << endl;
     cout << "player score: " << player1.getScore() << endl;

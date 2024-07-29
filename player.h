@@ -27,9 +27,9 @@
             void setName(const std::string& name);
             void setScore(int score);
             void setPlayerItems(const std::vector<std::string>& items);
-            void add_items(std::string& playerItems);
-            void remove_items(std::string& playerItems);
-            //void print_items(const std::vector<string> playerItems);
+            void add_items(const std::string& playerItems);
+            void remove_items(const std::string& playerItems);
+            void print_items() const;
       
     };
 
