@@ -13,16 +13,39 @@ using namespace std;
 int main()
 {
     cout << "Hello World!" << endl;
+
+    Map myMap("Le map", 3, "map3.txt");
+    vector<Enemy> enemies = makeEnemy("path3.txt");
+    
 }
 
-void setMap(const string& name, int mapNum, const string& pathMap)
+void printCurrMap(const string& map, const string& revealMap, vector<Enemy>& enemies)
 {
-    Map myMap(name, 3, "map3.txt");
+    ifstream fileMap(map);
+    ifstream fileReveal(revealMap);
+    string line;
+    vector<vector<char>> tempMap;
+    
+    while (getline(fileReveal, line))
+    {
+        for (char c : line)
+        {
+            if (c != '@')
+            {
+                
+            }
 
-    ifstream file(pathMap);
+        }
+    }
+
+}
+
+vector<Enemy> makeEnemy(const string& revealMap)
+{
+    ifstream file(revealMap);
     if (!file.is_open())
     {
-        cerr << "Failed to open file: " << pathMap << endl;
+        cerr << "Failed to open file: " << revealMap << endl;
         return;
     }
 
@@ -47,5 +70,6 @@ void setMap(const string& name, int mapNum, const string& pathMap)
         y += 1;
         x = 0;
     }
-    
+
+    return enemies;
 }
