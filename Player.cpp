@@ -20,19 +20,18 @@ void Player::setScore(int score) { this->score = score; }
 void Player::setPlayerItems(const vector<string>& items) { this-> playerItems = items;}
 
 void Player::add_items(const string& PlayerItems){
-
-
+    playerItems.push_back(PlayerItems);
 }
 
 
 int main()
 {
-    vector<string> lays ({"BOO", "hi"});
+    vector<string> lays ({});
     Player player1;
     player1.setName("Jorge");
     player1.setScore(0);
     player1.setPlayerItems(lays);
-    player1.add_items("hi");
+    player1.add_items("Blue");
 
     cout << "player Name: " << player1.getName() << endl;
     cout << "player score: " << player1.getScore() << endl;
