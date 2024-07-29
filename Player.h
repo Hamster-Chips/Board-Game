@@ -4,34 +4,33 @@
 
 #include <vector>
 #include <string>
-using namespace std;
 
 
-// create 
+// player
     class Player{
+
+        private:
+            std::string name; 
+            int score;
+            std::vector<std::string> playerItems; 
+
 
         public:
             Player();
-            void set_name(string n);
-            string get_name();
-            void set_score(int score);
-            int get_score();
-            void add_items(string item);
+            Player(const std::string& name, int score, const std::vector<std::string>& playerItems);
+            ~Player();
 
-            friend ostream& operator<<(ostream&, Player P1);
+            std::string getName() const;
+            int getScore() const;
+            std::vector<std::string> getPlayerItems() const;
 
-
-
-        private:
-            string _name;
-            int _score;
-            vector <string> _items;    
-
+            void setName(const std::string& name);
+            void setScore(int score);
+            void setPlayerItems(const std::vector<std::string>& items);
+            void add_items(const std::string& playerItems);
+            void remove_items(const std::string& playerItems);
+            void print_items() const;
+      
     };
-
-
-
-
-
 
 #endif
