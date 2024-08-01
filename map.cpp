@@ -51,16 +51,8 @@ bool Map::loadMap(const string& filename)
         vector<char> row;
         for (char c : line)
         {
-            if (c == '.' || c == 'O')
-            {
-                widthX += 1;
-                row.push_back(c);
-            }
-            else
-            {
-                cerr << "Unexpected character in map file: " << c << endl;
-                return false;
-            }
+            row.push_back(c);
+            widthX += 1;
         }
         lengthY += 1;
         tempMap.push_back(row);

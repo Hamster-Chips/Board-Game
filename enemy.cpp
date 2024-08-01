@@ -22,9 +22,10 @@ void Enemy::setY(int startY) { this->startY = startY; }
 
 void Enemy::printEnemy()
 {
-    cout << name << " health: " << health << endl;
+    cout << name << endl; 
+    cout << "   health: " << health << endl;
 
-    cout << "rewards: ";
+    cout << "   rewards: ";
     for(int i = 0; i < reward.size(); i++)
     {
         cout << reward[i] << " ";

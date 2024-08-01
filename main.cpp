@@ -10,59 +10,48 @@ using namespace std;
     To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp (enter) ./main.exe
 */
 
+vector<Enemy> makeEnemy(const string& revealMap);
+
 int main()
 {
-    cout << "Hello World!" << endl;
+    cout << "Hello World!\n" << endl;
 
     Map myMap("Le map", 3, "map3.txt");
-    vector<Enemy> enemies = makeEnemy("path3.txt");
-    
-}
+    Map revealMap("NO ONE SEE", 3, "reveal3.txt");
+    vector<Enemy> enemies = makeEnemy("reveal3.txt");
 
-void printCurrMap(const string& map, const string& revealMap, vector<Enemy>& enemies)
-{
-    ifstream fileMap(map);
-    ifstream fileReveal(revealMap);
-    string line;
-    vector<vector<char>> tempMap;
-    
-    while (getline(fileReveal, line))
+    myMap.printMap();
+    cout << endl;
+
+    revealMap.printMap();
+    cout << endl;
+
+    for (Enemy enemy : enemies)
     {
-        for (char c : line)
-        {
-            if (c != '@')
-            {
-                
-            }
-
-        }
+        enemy.printEnemy();
     }
-
+    cout << endl;
+    
 }
 
 vector<Enemy> makeEnemy(const string& revealMap)
 {
     ifstream file(revealMap);
-    if (!file.is_open())
-    {
-        cerr << "Failed to open file: " << revealMap << endl;
-        return;
-    }
 
-    string line;
-    vector<vector<char>> tempMap;
     vector<Enemy> enemies;
+    int health = 10;
     vector<string> rewards = {"gold", "item"};
+
     int x = 0;
     int y = 0;
+    string line;
     while (getline(file, line))
     {
-        vector<char> row;
         for (char c : line)
         {
             if (c == '@')
             {
-                Enemy newEnemy("wack", 10, rewards, x, y);
+                Enemy newEnemy("wack", health, rewards, x, y);
                 enemies.push_back(newEnemy);
             }
             x += 1;
