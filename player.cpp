@@ -1,5 +1,6 @@
 #include "player.h"
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 
 using namespace std; 
@@ -20,8 +21,21 @@ void Player::setScore(int score) { this->score = score; }
 void Player::setPlayerItems(const vector<string>& items) { this-> playerItems = items;}
 
 void Player::add_items(const string& PlayerItems){
+    playerItems.push_back(PlayerItems);
+}
 
+void Player::remove_items(const std::string& items){
+    auto it = std::find(playerItems.begin(), playerItems.end(), items);
+    if (it != playerItems.end()) {
+        playerItems.erase(it);
+    }
+}
 
+void Player::print_items() const{
+    for (const string items: getPlayerItems()){
+        cout<< items << " ";
+    }
+    cout << "\n";
 }
 
 
@@ -32,14 +46,16 @@ int main()
     player1.setName("Jorge");
     player1.setScore(0);
     player1.setPlayerItems(lays);
-    player1.add_items("hi");
+    player1.add_items("doo");
+    player1.remove_items("hi");
+    player1.print_items();
 
     cout << "player Name: " << player1.getName() << endl;
     cout << "player score: " << player1.getScore() << endl;
     cout << "player items: ";
-    for (const string items: player1.getPlayerItems()){
-        cout<< items << " ";
-    }
+    //for (const string items: player1.getPlayerItems()){
+    //    cout<< items << " ";
+    //}
 
 
 
