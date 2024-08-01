@@ -27,9 +27,7 @@ int main()
     cout << endl;
 
     for (Enemy enemy : enemies)
-    {
         enemy.printEnemy();
-    }
     cout << endl;
     
 }

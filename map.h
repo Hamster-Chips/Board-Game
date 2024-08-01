@@ -20,6 +20,8 @@ public:
 
     std::string getName() const;
     int getMapNum() const;
+    int getWidthX() const;
+    int getLengthY() const;
     std::vector<std::vector<char>> getMapData() const;
 
     void setName(const std::string& name);

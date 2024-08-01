@@ -32,3 +32,11 @@ void Enemy::printEnemy()
     }
     cout << endl;
 }
+
+void Enemy::randomMovement(Map myMap)
+{
+    vector<vector<char>> mapData = myMap.getMapData();
+    int maxX = myMap.getWidthX();
+    int maxY = myMap.getLengthY();
+    
+}

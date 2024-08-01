@@ -14,6 +14,8 @@ Map::~Map() {}
 string Map::getName() const { return name; }
 int Map::getMapNum() const { return mapNum; }
 vector<vector<char>> Map::getMapData() const { return mapData; }
+int Map::getWidthX() const { return widthX; }
+int Map::getLengthY() const { return lengthY; }
 
 void Map::setName(const string& name) { this->name = name; }
 void Map::setMapNum(int mapNum) { this->mapNum = mapNum; }

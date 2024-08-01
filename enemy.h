@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "map.h"
 #include <string>
 #include <vector>
 
@@ -31,6 +32,7 @@ public:
     void setX(int startX);
     void setY(int startY);
 
+    void randomMovement(Map myMap);
     void printEnemy();
 };
 
