@@ -2,6 +2,7 @@
 #include <fstream>
 #include "map.h"
 #include "enemy.h"
+#include "player.h"
 
 using namespace std;
 
@@ -13,11 +14,26 @@ using namespace std;
 int main()
 {
     cout << "Hello World!" << endl;
+    
+    vector<string> lays ({"BOO", "hi"});
+    Player exodus;
+    exodus.setName("Jorge");
+    exodus.setScore(0);
+    exodus.setPlayerItems(lays);
+    exodus.add_items("hi");
+    exodus.set_cur_map(4);
+
+    Map* map1 = Map::getInstance();
+
+    map1->loadMap(exodus.get_cur_map());
+    map1->printMap(exodus.getLoc());
+
+
 }
 
 void setMap(const string& name, int mapNum, const string& pathMap)
 {
-    Map myMap(name, 3, "map3.txt");
+    //Map myMap(name, 3, "map3.txt");
 
     ifstream file(pathMap);
     if (!file.is_open())
