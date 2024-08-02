@@ -16,6 +16,7 @@
 
 
         public:
+        
             Player();
             Player(const std::string& name, int score, const std::vector<std::string>& playerItems);
             ~Player();
@@ -27,9 +28,10 @@
             void setName(const std::string& name);
             void setScore(int score);
             void setPlayerItems(const std::vector<std::string>& items);
-            void add_items(const std::string& playerItems);
-            void remove_items(const std::string& items);
-            void print_items() const;
+
+            void addItems(const std::string& playerItems);
+            void removeItems(const std::string& items);
+            void printItems() const;
       
     };
 
