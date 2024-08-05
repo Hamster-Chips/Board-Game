@@ -1,8 +1,8 @@
 #include <iostream> 
 #include <fstream>
 #include "map.h"
-#include "enemy.h"
 #include "player.h"
+#include "enemy.h"
 
 using namespace std;
 
@@ -13,27 +13,43 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    
-    vector<string> lays ({"BOO", "hi"});
+
     Player exodus;
-    exodus.setName("Jorge");
+    exodus.setName("Exodus");
     exodus.setScore(0);
-    exodus.setPlayerItems(lays);
     exodus.add_items("hi");
-    exodus.set_cur_map(4);
 
-    Map* map1 = Map::getInstance();
+    Map playerMap(exodus.getCurMapNum());
+    playerMap.printMap(exodus.getPlayerLoc());
+    //exodus.moveDown();
 
-    map1->loadMap(exodus.get_cur_map());
-    map1->printMap(exodus.getLoc());
+    std::cout << '\n' << endl;
+    int input = 0;
+    while (input != 5){
+        std::cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "-1 to quit\n" << endl;
+        cin >> input;
+        if (input == 1){
+            exodus.moveUp();
+            
+        }else if(input == 2){
+            exodus.moveDown();
+            
+        }else if(input == 3){
+            exodus.moveRight();
+            
+        }else if(input == 4){
+            exodus.moveLeft();
+        }
+        std::cout << endl;
+    }
+    
 
 
 }
 
-void setMap(const string& name, int mapNum, const string& pathMap)
+/*void setMap(const string& name, int mapNum, const string& pathMap)
 {
-    //Map myMap(name, 3, "map3.txt");
+    Map myMap(name, 3, "map3.txt");
 
     ifstream file(pathMap);
     if (!file.is_open())
@@ -63,5 +79,5 @@ void setMap(const string& name, int mapNum, const string& pathMap)
         y += 1;
         x = 0;
     }
-    
-}
+
+}*/

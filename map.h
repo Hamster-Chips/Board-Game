@@ -6,62 +6,39 @@
 
 class Map 
 {
-
 private:
-
     std::string name;
-    int mapNum;
+    //int mapNum;
     int widthX;
     int lengthY;
+    std::vector<int> StartLoc;
+    std::vector<int> FinishLoc;
     std::vector<std::vector<char>> mapData;
-
-
-    static Map* instancePtr;
-    Map();
-   //Map(const std::string& name, int mapNum, const std::string& filename);
-   Map(int _mapNum);
-    ~Map();
-
-
-    
-
-
-    
-
-    
 
 public:
     
-    Map(const Map& obj) = delete;
+    Map();
+    //Map(const std::string& name, int mapNum, const std::string& filename);
+    Map(int mapNum);
+    ~Map();
 
-    static Map* getInstance()
-    {
-        if (instancePtr == NULL)
-        {
-            instancePtr = new Map();
-        }else{
-            return instancePtr;
-        }
-    }
-
-
-    /*std::string getName() const;
-    int getMapNum() const;
-    
+    std::vector<int> getStartLoc();
+    std::vector<int> getFinishLoc();
+    std::string getName() const;
+    //int getMapNum() const;
+    int getWidthX() const;
+    int getLengthY() const;
+    std::vector<std::vector<char>> getMapData() const;
 
     void setName(const std::string& name);
-    void setMapNum(int mapNum);
-    void setDimension(const std::vector<std::vector<char>> mapData);*/
+    //void setMapNum(int mapNum);
+    //void setDimension(const std::vector<std::vector<char>> mapData);
 
-    std::vector<std::vector<char>> getMapData() const;
+
     void printMap(const std::vector<int>& p_loc);
-    //void printMap() const;
-    //bool loadMap(const std::string& filename);
+    friend std::ostream& operator<<(std::ostream&, Map mp1);
+
     bool loadMap(int fileNum);
-
-//Map* Map::instancePtr = NULL;
 };
-
-
 
 #endif

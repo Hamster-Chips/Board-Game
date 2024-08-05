@@ -13,6 +13,8 @@
             std::string name; 
             int score;
             std::vector<std::string> playerItems; 
+            std::vector<int> playerLoc;
+            int curMapNum;
 
 
         public:
@@ -23,6 +25,9 @@
             std::string getName() const;
             int getScore() const;
             std::vector<std::string> getPlayerItems() const;
+            
+            
+
 
             void setName(const std::string& name);
             void setScore(int score);
@@ -30,7 +35,18 @@
             void add_items(const std::string& playerItems);
             void remove_items(const std::string& items);
             void print_items() const;
-      
+
+
+            std::vector<int> getPlayerLoc();
+            void setPlayerLoc(std::vector<int> newLoc);
+            char moveUp();
+            char moveDown();
+            char moveLeft();
+            char moveRight();
+            int getCurMapNum();
+            void setCurMapNum(int tempNum);
+
+
     };
 
 #endif

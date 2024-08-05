@@ -2,13 +2,19 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include "map.h"
 
 using namespace std; 
 
-Player::Player() : name(""), score(0), playerItems() {}
+Player::Player() : name(""), score(0), playerItems(), playerLoc({0,0}), curMapNum(1) {}
 
 Player::Player(const string& name, int score, const vector<string>& playerItems)
-       : name(name), score(score), playerItems(playerItems) {};
+       : name(name), score(score), playerItems(playerItems) 
+    {
+        //added for map class functionality
+        this->curMapNum = 1;
+        this->playerLoc = {0,0};
+    };
 
 Player::~Player() {}
 
@@ -31,35 +37,167 @@ void Player::remove_items(const std::string& items){
     }
 }
 
-void Player::print_items() const{
+/*void Player::print_items() const{
     for (const string items: getPlayerItems()){
-        cout<< items << " ";
+        std::cout<< items << " ";
     }
-    cout << "\n";
+    std::cout << "\n";
+}*/
+
+
+//added for map class functionality
+std::vector<int> Player::getPlayerLoc(){
+    return playerLoc;
+}
+
+//added for map class functionality
+void Player::setPlayerLoc(std::vector<int> newLoc){
+    this-> playerLoc = newLoc;
+}
+
+int Player::getCurMapNum(){
+    return curMapNum;
+}
+
+void Player::setCurMapNum(int tempNum){
+    this->curMapNum = tempNum;
+    
 }
 
 
-int main()
-{
-    vector<string> lays ({"BOO", "hi"});
-    Player player1;
-    player1.setName("Jorge");
-    player1.setScore(0);
-    player1.setPlayerItems(lays);
-    player1.add_items("doo");
-    player1.remove_items("hi");
-    player1.print_items();
+char Player::moveDown(){
+    Map tempMap(curMapNum);
+    std::cout << playerLoc[1] << endl;
+    if (playerLoc[1] +1 <= tempMap.getLengthY()-1){ //if player next move is within bounds
+        int futureYLoc = playerLoc[1] +1;
+        char charAtLoc = tempMap.getMapData()[futureYLoc][playerLoc[0]]; // get char at the future location
+        
+        if (charAtLoc == 'F'){
+            return charAtLoc;
 
-    cout << "player Name: " << player1.getName() << endl;
-    cout << "player score: " << player1.getScore() << endl;
-    cout << "player items: ";
-    //for (const string items: player1.getPlayerItems()){
-    //    cout<< items << " ";
-    //}
+//can either do the code below or return 'F' to the main function and change to the nextmap there
+            /*this->curMapNum += 1;
+            Map tempMap(curMapNum);
+            this->playerLoc = tempMap.getStartLoc();*/
+            
+        }else if(charAtLoc == 'O') {
+            this->playerLoc[1] +=1;
+            std::cout << '\n' << endl;
+            tempMap.printMap(playerLoc);
+            
+
+            }else{
+            std::cout<< "You cannot move there."<<endl;
+            tempMap.printMap(playerLoc);
+        }
+        
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+        tempMap.printMap(playerLoc);
+
+    }
+    return '0';
+}
+
+char Player::moveUp(){
+    Map tempMap(curMapNum);
 
 
+    if (playerLoc[1] -1 >= 0){ //if player next move is within bounds
+        int futureYLoc = playerLoc[1] -1;
+        char charAtLoc = tempMap.getMapData()[futureYLoc][playerLoc[0]]; // get char at the future location
+
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+//can either do the code below or return 'F' to the main function and change to the nextmap there
+            /*this->curMapNum += 1;
+            Map tempMap(curMapNum);
+            this->playerLoc = tempMap.getStartLoc();*/
+
+        }else if(charAtLoc == 'O') {
+            this->playerLoc[1] -=1;
+            std::cout << '\n' << endl;
+            tempMap.printMap(playerLoc);
+            
+        }else{ 
+            std::cout<< "You cannot move there."<<endl;
+            tempMap.printMap(playerLoc);
+        }
+
+    }else{ 
+        std::cout<< "You cannot move there."<<endl;
+        tempMap.printMap(playerLoc);
+
+    }
+    //std::cout << "lebron" << endl;
+    return '0';
+}
+
+char Player::moveLeft(){
+    Map tempMap(curMapNum);
+
+    if (playerLoc[0] -1 >= 0){ //if player next move is within bounds
+        int futureXLoc = playerLoc[0] -1;
+        char charAtLoc = tempMap.getMapData()[playerLoc[1]][futureXLoc]; // get char at the future location
+
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+//can either do the code below or return 'F' to the main function and change to the nextmap there
+            /*this->curMapNum += 1;
+            Map tempMap(curMapNum);
+            this->playerLoc = tempMap.getStartLoc();*/
+
+        }else if(charAtLoc == 'O') {
+            this->playerLoc[0] -=1;
+            std::cout << '\n' << endl;
+            tempMap.printMap(playerLoc);
+
+        }else{ 
+            std::cout<< "You cannot move there."<<endl;
+            tempMap.printMap(playerLoc);
+        }
+
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+        tempMap.printMap(playerLoc);
+
+    }
+    return '0';
+}
 
 
-    return 0; 
+char Player::moveRight(){
+    Map tempMap(curMapNum);
 
+    if (playerLoc[0] +1 <= tempMap.getWidthX()-1){ //if player next move is within bounds
+        int futureXLoc = playerLoc[0] +1;
+        char charAtLoc = tempMap.getMapData()[playerLoc[1]][futureXLoc]; // get char at the future location
+
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+//can either do the code below or return 'F' to the main function and change to the nextmap there
+            /*this->curMapNum += 1;
+            Map tempMap(curMapNum);
+            this->playerLoc = tempMap.getStartLoc();*/
+
+        }else if(charAtLoc == 'O') {
+            this->playerLoc[0] +=1;
+            std::cout << '\n' << endl;
+            tempMap.printMap(playerLoc);
+
+
+            }else{
+            std::cout<< "You cannot move there."<<endl;
+            tempMap.printMap(playerLoc);
+        }
+
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+        tempMap.printMap(playerLoc);
+
+    }
+    return '0';
 }
