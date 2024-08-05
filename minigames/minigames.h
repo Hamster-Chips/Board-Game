@@ -24,12 +24,12 @@
 
             std::string getName() const;
             std::vector<int> getPlayersScore() const;
-            std::vector<std::string> getPlayer() const;
+            std::vector<std::string> getPlayers() const;
             std::vector<int> getReward() const;
 
             void setName(const std::string& name);
             void setPlayersScore(const std::vector<int>& playersScore);
-            void setPlayer(const std::vector<std::string>& players);
+            void setPlayers(const std::vector<std::string>& players);
             void setReward(const std::vector<int>& reward);
 
             void printMinigames() const;
