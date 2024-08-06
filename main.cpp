@@ -16,7 +16,7 @@ vector<Enemy> makeEnemy(const string& revealMap);
 
 int main()
 {
-    cout << "Hello World!\n" << endl;
+    cout << "TESTING\n" << endl;
 
     // Testing map
     Map myMap("Le map", 3, "map3.txt");
