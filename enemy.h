@@ -2,6 +2,7 @@
 #define ENEMY_H
 
 #include "map.h"
+
 #include <string>
 #include <vector>
 
@@ -13,7 +14,6 @@ private:
     std::vector<std::string> reward;
     int startX;
     int startY;
-
 
 public:
     Enemy();

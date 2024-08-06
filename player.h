@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "map.h"
+
 #include <vector>
 #include <string>
 
@@ -10,6 +12,8 @@ private:
     std::string name; 
     int score;
     std::vector<std::string> playerItems; 
+    int locX;
+    int locY;
 
 public:
     Player();
@@ -26,6 +30,8 @@ public:
 
     void addItems(const std::string& playerItems);
     void removeItems(const std::string& items);
+
+    // bool move(Map currMap, const int direction);
     
     void printItems() const;
     

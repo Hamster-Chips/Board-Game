@@ -5,7 +5,7 @@
 
 using namespace std; 
 
-Player::Player() : name(""), score(0), playerItems() {}
+Player::Player() : name(""), score(0), playerItems(), locX(0), locY(0) {}
 
 Player::Player(const string& name, int score, const vector<string>& playerItems)
        : name(name), score(score), playerItems(playerItems) {};
@@ -31,6 +31,46 @@ void Player::removeItems(const std::string& items)
     if (it != playerItems.end())
         playerItems.erase(it);
 }
+
+//  bool Player::move(Map currMap, const int direction)
+//  {
+//     /*
+//         1. Move Up
+//         2. Move Down
+//         3. Move Left
+//         4. Move Right
+//     */
+//     int maxX = currMap.getWidthX();
+//     int maxY = currMap.getLengthY();
+
+//     switch (direction)
+//     {
+//         case 1:
+//             if (locY == 0)
+//                 return false;
+//             --locY;
+//             break;
+//         case 2:
+//             if (locY == maxY)
+//                 return false;
+//             ++locY;
+//             break;
+//         case 3:
+//             if (locX == 0)
+//                 return false;
+//             --locX;
+//             break;
+//         case 4:
+//             if (locX == maxX)
+//                 return false;
+//             ++locX;
+//             break;
+//     }
+
+//     cout << locX << ", " << locY << endl;
+//     return true;
+
+//  }
 
 void Player::printItems() const
 {

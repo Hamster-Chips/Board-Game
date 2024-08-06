@@ -9,7 +9,7 @@ using namespace std;
 
 /*
     Notes for myself:
-    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp (enter) ./main.exe
+    To run put in the cmd like: g++ -o main.exe main.cpp map.h map.cpp enemy.h enemy.cpp player.h player.cpp (enter) ./main.exe
 */
 
 vector<Enemy> makeEnemy(const string& revealMap);
@@ -18,18 +18,20 @@ int main()
 {
     cout << "TESTING\n" << endl;
 
-    // Testing map
-    Map myMap("Le map", 3, "map3.txt");
-    Map revealMap("NO ONE SEE", 3, "reveal3.txt");
-    vector<Enemy> enemies = makeEnemy("reveal3.txt");
-
-    myMap.printMap();
-    cout << endl;
-
-    revealMap.printMap();
-    cout << endl;
-
     // Testing enemy
+    vector<string> rewards = {"gold", "item"};
+    int health = 100;
+
+    Enemy enemy1("enemy1", health, rewards, -1, -1);
+
+    Enemy enemy2;
+    enemy2.setName("enemy2");
+    enemy2.setHealth(health);
+    enemy2.setReward(rewards);
+    enemy2.setX(-1);
+    enemy2.setY(-1);
+
+    vector<Enemy> enemies = makeEnemy("reveal3.txt");
     for (Enemy enemy : enemies)
         enemy.printEnemy();
     cout << endl;
@@ -43,10 +45,17 @@ int main()
     player1.addItems("doo");
     player1.removeItems("hi");
     player1.printItems();
-
     cout << "player Name: " << player1.getName() << endl;
     cout << "player score: " << player1.getScore() << endl;
     cout << "player items: ";
+
+    // Testing map
+    Map myMap("Le map", 3, "map2.txt");
+    myMap.printMap();
+    cout << endl;
+    Map revealMap("NO ONE SEE", 3, "reveal3.txt");
+    revealMap.printMap();
+    cout << endl;
     
 }
 

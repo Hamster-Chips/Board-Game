@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Map::Map() : name (""), mapNum(0) {}
+Map::Map() : name(""), mapNum(0), widthX(0), lengthY(0) {}
 
 Map::Map(const string& name, int mapNum, const std::string& filename)
     : name(name), mapNum(mapNum) { loadMap(filename); }
@@ -24,11 +24,12 @@ void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = map
 void Map::printMap() const
 {
     cout << widthX << ", " << lengthY << endl;
-    for (const vector<char>& row : mapData)
+    vector<char> row;
+    for (int i = 0; i < lengthY; i++)
     {
-        for (const char& cell : row)
+        for (int j = 0; j < widthX; j++)
         {
-            cout << cell;
+            cout << mapData[i][j] << " ";
         }
         cout << endl;
     }
