@@ -1,8 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "player.h"
-
 #include <string>
 #include <vector>
 
@@ -14,7 +12,6 @@ private:
     int widthX;
     int lengthY;
     std::vector<std::vector<char>> mapData;
-    // std::vector<Player> players;
 
 public:
     Map();

@@ -8,17 +8,16 @@
 using namespace std;
 
 /*
-    Notes for myself:
-    To run put in the cmd like: g++ -o main.exe main.cpp map.h map.cpp enemy.h enemy.cpp player.h player.cpp (enter) ./main.exe
+    clear; g++ -o main.exe main.cpp map.cpp enemy.cpp player.cpp; ./main.exe
 */
 
 vector<Enemy> makeEnemy(const string& revealMap);
+bool move(Map& currMap, Player& currPlayer, const int direction);
+void currPrint(const Map& currMap, const vector<Player>& players, const vector<Enemy>& enemies);
 
 int main()
 {
-    cout << "TESTING\n" << endl;
-
-    // Testing enemy
+    cout << "TESTING enemy ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     vector<string> rewards = {"gold", "item"};
     int health = 100;
 
@@ -36,27 +35,63 @@ int main()
         enemy.printEnemy();
     cout << endl;
 
-    // Testing player
-    vector<string> lays ({"BOO", "hi"});
-    Player player1;
-    player1.setName("Jorge");
-    player1.setScore(0);
-    player1.setPlayerItems(lays);
-    player1.addItems("doo");
-    player1.removeItems("hi");
-    player1.printItems();
-    cout << "player Name: " << player1.getName() << endl;
-    cout << "player score: " << player1.getScore() << endl;
-    cout << "player items: ";
+    cout << "TESTING player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    vector<Player> players;
+    vector<string> items ({"gun", "taxes", "loan"});
 
-    // Testing map
-    Map myMap("Le map", 3, "map2.txt");
+    Player player1("Player 1", '%', 69, items, 1, 1);
+    player1.printPlayer();
+    players.push_back(player1);
+    cout << endl;
+
+    Player player2;
+    player2.setName("Player 2");
+    player2.setIdentifier('$');
+    player2.setScore(1);
+    player2.setPlayerItems(items);
+    player2.setX(0);
+    player2.setY(0);
+    player2.removeItems("gun");
+    player2.addItems("depressed");
+    player2.printPlayer();
+    players.push_back(player2);
+    cout << endl;
+
+    cout << "TESTING map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    Map myMap("Le map", 3, "map1.txt");
     myMap.printMap();
     cout << endl;
-    Map revealMap("NO ONE SEE", 3, "reveal3.txt");
-    revealMap.printMap();
+
+    myMap.loadMap("map2.txt");
+    myMap.printMap();
     cout << endl;
     
+    myMap.loadMap("map3.txt");
+    myMap.printMap();
+    cout << endl;
+
+    cout << "TESTING movement ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    bool done = false;
+    Map temp = myMap;
+    temp.loadMap("map2.txt");
+    currPrint(temp, players, enemies);
+    while (!done)
+    {
+        int choice = -1;
+        for (Player& p : players)
+        {
+            cout << "1. Up\n2. Down\n3. Left\n4. Right" << endl;
+            cout << "choice: ";
+            cin >> choice;
+            if(move(temp, p, choice))
+            {   
+                currPrint(temp, players, enemies);
+            }
+
+        }
+
+        // done = true;
+    }
 }
 
 vector<Enemy> makeEnemy(const string& revealMap)
@@ -86,4 +121,68 @@ vector<Enemy> makeEnemy(const string& revealMap)
     }
 
     return enemies;
+}
+
+bool move(Map& currMap, Player& currPlayer, const int direction)
+{
+    /*
+        1. Up
+        2. Down
+        3. Left
+        4. Right
+    */
+
+    int max_X = currMap.getWidthX();
+    int max_Y = currMap.getLengthY();
+    int curr_X = currPlayer.getX();
+    int curr_Y = currPlayer.getY();
+
+    switch (direction)
+    {
+        case 1:
+            if (curr_Y == 0)
+                return false;
+            currPlayer.setY(--curr_Y);
+            break;
+        case 2:
+            if (curr_Y == max_Y)
+                return false;
+            currPlayer.setY(++curr_Y);
+            break;
+        case 3:
+            if (curr_X == 0)
+                return false;
+            currPlayer.setX(--curr_X);
+            break;
+        case 4:
+            if (curr_X == max_X)
+                return false;
+                
+            currPlayer.setX(++curr_X);
+            break;
+    }
+
+    return true;
+}
+
+void currPrint(const Map& currMap, const vector<Player>& players, const vector<Enemy>& enemies)
+{
+    int map_y = currMap.getLengthY();
+    int map_x = currMap.getWidthX();
+    vector<vector<char>> tempData = currMap.getMapData();
+    for(Player p : players)
+    {
+        tempData[p.getY()][p.getX()] = p.getIdentifier();
+        cout << p.getX() << ", " << p.getY() << endl;
+    }
+
+    for (int i = 0; i < map_y; i++)
+    {
+        for (int j = 0; j < map_x; j++)
+        {
+            cout << tempData[i][j] << " ";
+        }
+        cout << endl;
+    }
+
 }

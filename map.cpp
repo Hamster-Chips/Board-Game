@@ -23,7 +23,7 @@ void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = map
 
 void Map::printMap() const
 {
-    cout << widthX << ", " << lengthY << endl;
+    // cout << widthX << ", " << lengthY << endl;
     vector<char> row;
     for (int i = 0; i < lengthY; i++)
     {

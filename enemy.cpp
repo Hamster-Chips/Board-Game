@@ -3,22 +3,22 @@
 
 using namespace std;
 
-Enemy::Enemy() : name(""), health(0), startX(-1), startY(-1) {}
-Enemy::Enemy(const std::string& name, int health, vector<string>& reward, int startX, int startY)
-    : name(name), health(health), reward(reward), startX(startX), startY(startY) {}
+Enemy::Enemy() : name(""), health(0), x(-1), y(-1) {}
+Enemy::Enemy(const std::string& name, int health, vector<string>& reward, int x, int y)
+    : name(name), health(health), reward(reward), x(x), y(y) {}
 Enemy::~Enemy(){}
 
 string Enemy::getName() { return name; }
 int Enemy::getHealth() { return health; }
 std::vector<std::string> Enemy::getReward() { return reward; }
-int Enemy::getStartX() { return startX; } 
-int Enemy::getStartY() { return startY; }
+int Enemy::getX() { return x; } 
+int Enemy::getY() { return y; }
 
 void Enemy::setName(const string& name) {this->name = name;}
 void Enemy::setHealth(int health) { this->health = health; }
 void Enemy::setReward(std::vector<std::string> reward) { this->reward = reward; }
-void Enemy::setX(int startX) { this->startX = startX; }
-void Enemy::setY(int startY) { this->startY = startY; }
+void Enemy::setX(int x) { this->x = x; }
+void Enemy::setY(int y) { this->y = y; }
 
 void Enemy::printEnemy()
 {
@@ -31,12 +31,8 @@ void Enemy::printEnemy()
         cout << reward[i] << " ";
     }
     cout << endl;
-}
 
-void Enemy::randomMovement(Map myMap)
-{
-    vector<vector<char>> mapData = myMap.getMapData();
-    int maxX = myMap.getWidthX();
-    int maxY = myMap.getLengthY();
+    cout << "   location (x, y) -> ";
+    cout << "(" << x << ", " << y << ")" << endl;
     
 }
