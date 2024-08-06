@@ -38,23 +38,23 @@ int rollDice(int count, int max) {
   return sum;
 }
 
-int main() {
-  int count = 0;
-  int max = 0;
-  int pos = DIE.find('d');
+// int main() {
+//   int count = 0;
+//   int max = 0;
+//   int pos = DIE.find('d');
 
-  cout << pos << endl;
+//   cout << pos << endl;
 
-  cout << DIE.substr(0, 'd') << endl;
+//   cout << DIE.substr(0, 'd') << endl;
 
-  // Converts the max possible roll and # of dice from string into a number
-  count = stoi(DIE.substr(0, pos));
-  max = stoi(DIE.substr(pos + 1));
+//   // Converts the max possible roll and # of dice from string into a number
+//   count = stoi(DIE.substr(0, pos));
+//   max = stoi(DIE.substr(pos + 1));
 
-  cout << "# of Dice: " << count << endl;
-  cout << "Max Possible Roll: " << max << endl;
+//   cout << "# of Dice: " << count << endl;
+//   cout << "Max Possible Roll: " << max << endl;
 
-  rollDice(count, max);
+//   rollDice(count, max);
   
-  return 0;
-}
+//   return 0;
+// }

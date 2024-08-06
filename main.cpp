@@ -2,17 +2,29 @@
 #include <fstream>
 #include "map.h"
 #include "enemy.h"
-
+#include "minigames/minigames.h"
+#include "player.h"
 using namespace std;
 
 /*
     Notes for myself:
-    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp (enter) ./main.exe
+    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
 */
 
 int main()
 {
+    Minigames rollndie;
     cout << "Hello World!" << endl;
+    vector<string> lays ({"BOO", "hi"});
+    vector<int> score ({0, 1, 2, 3});
+    vector<string> player ({"jorge","brain", "brain", "Dave"});
+    Player player1("jorge", 0, lays);
+    Player player2("brain", 0, lays);
+    Player player3("brain", 0, lays);
+    Player player4("Dave", 0, lays);
+    rollndie.printResult(score, player);
+    
+
 }
 
 void setMap(const string& name, int mapNum, const string& pathMap)

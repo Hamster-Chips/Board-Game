@@ -39,27 +39,29 @@ void Player::printItems() const{
 }
 
 
-int main()
-{
-    vector<string> lays ({"BOO", "hi"});
-    Player player1;
-    player1.setName("Jorge");
-    player1.setScore(0);
-    player1.setPlayerItems(lays);
-    player1.addItems("doo");
-    player1.removeItems("hi");
-    player1.printItems();
-
-    cout << "player Name: " << player1.getName() << endl;
-    cout << "player score: " << player1.getScore() << endl;
-    cout << "player items: ";
-    //for (const string items: player1.getPlayerItems()){
-    //    cout<< items << " ";
-    //}
 
 
+// int main()
+// {
+//     vector<string> lays ({"BOO", "hi"});
+//     Player player1;
+//     player1.setName("Jorge");
+//     player1.setScore(0);
+//     player1.setPlayerItems(lays);
+//     player1.addItems("doo");
+//     player1.removeItems("hi");
+//     player1.printItems();
+
+//     cout << "player Name: " << player1.getName() << endl;
+//     cout << "player score: " << player1.getScore() << endl;
+//     cout << "player items: ";
+//     //for (const string items: player1.getPlayerItems()){
+//     //    cout<< items << " ";
+//     //}
 
 
-    return 0; 
 
-}
+
+//     return 0; 
+
+// }
