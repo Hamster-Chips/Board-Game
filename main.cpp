@@ -12,7 +12,7 @@ using namespace std;
 */
 
 vector<Enemy> makeEnemy(const string& revealMap);
-bool move(Map& currMap, Player& currPlayer, const int direction);
+bool move(Map& currMap, Player& currPlayer);
 void currPrint(const Map& currMap, const vector<Player>& players, const vector<Enemy>& enemies);
 
 int main()
@@ -49,8 +49,8 @@ int main()
     player2.setIdentifier('$');
     player2.setScore(1);
     player2.setPlayerItems(items);
-    player2.setX(0);
-    player2.setY(0);
+    player2.setX(1);
+    player2.setY(1);
     player2.removeItems("gun");
     player2.addItems("depressed");
     player2.printPlayer();
@@ -74,20 +74,26 @@ int main()
     bool done = false;
     Map temp = myMap;
     temp.loadMap("map2.txt");
-    currPrint(temp, players, enemies);
     while (!done)
     {
         int choice = -1;
         for (Player& p : players)
         {
-            cout << "1. Up\n2. Down\n3. Left\n4. Right" << endl;
-            cout << "choice: ";
-            cin >> choice;
-            if(move(temp, p, choice))
-            {   
+            cout << p.getName() <<"'s turn [" << p.getIdentifier() << "]" << endl;
+            bool moved = false;
+            while (!moved)
+            {
                 currPrint(temp, players, enemies);
+                if (move(temp, p))
+                {
+                    cout << p.getX() << ", " << p.getY() << endl;
+                    moved = true;
+                }
+                else
+                {
+                    cout << "You cannot go that way... Try again" << endl;
+                }
             }
-
         }
 
         // done = true;
@@ -123,7 +129,7 @@ vector<Enemy> makeEnemy(const string& revealMap)
     return enemies;
 }
 
-bool move(Map& currMap, Player& currPlayer, const int direction)
+bool move(Map& currMap, Player& currPlayer)
 {
     /*
         1. Up
@@ -132,33 +138,37 @@ bool move(Map& currMap, Player& currPlayer, const int direction)
         4. Right
     */
 
-    int max_X = currMap.getWidthX();
-    int max_Y = currMap.getLengthY();
+    int direction = 0;
+    cout << "1. Up\n2. Down\n3. Left\n4. Right" << endl;
+    cout << "choice: ";
+    cin >> direction;
+    cout << endl;
+
+    vector<vector<char>> mapData = currMap.getMapData();
     int curr_X = currPlayer.getX();
     int curr_Y = currPlayer.getY();
 
     switch (direction)
     {
         case 1:
-            if (curr_Y == 0)
+            if (mapData[--curr_Y][curr_X] == '.')
                 return false;
-            currPlayer.setY(--curr_Y);
+            currPlayer.setY(curr_Y);
             break;
         case 2:
-            if (curr_Y == max_Y)
+            if (mapData[++curr_Y][curr_X] == '.')
                 return false;
-            currPlayer.setY(++curr_Y);
+            currPlayer.setY(curr_Y);
             break;
         case 3:
-            if (curr_X == 0)
+            if (mapData[curr_Y][--curr_X] == '.')
                 return false;
-            currPlayer.setX(--curr_X);
+            currPlayer.setX(curr_X);
             break;
         case 4:
-            if (curr_X == max_X)
+            if (mapData[curr_Y][++curr_X] == '.')
                 return false;
-                
-            currPlayer.setX(++curr_X);
+            currPlayer.setX(curr_X);
             break;
     }
 
@@ -173,7 +183,6 @@ void currPrint(const Map& currMap, const vector<Player>& players, const vector<E
     for(Player p : players)
     {
         tempData[p.getY()][p.getX()] = p.getIdentifier();
-        cout << p.getX() << ", " << p.getY() << endl;
     }
 
     for (int i = 0; i < map_y; i++)
