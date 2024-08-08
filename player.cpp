@@ -24,7 +24,7 @@ void Player::addItems(const string& PlayerItems){
     playerItems.push_back(PlayerItems);
 }
 
-void Player::removeItems(const std::string& items){
+void Player::removeItems(const string& items){
     auto it = std::find(playerItems.begin(), playerItems.end(), items);
     if (it != playerItems.end()) {
         playerItems.erase(it);

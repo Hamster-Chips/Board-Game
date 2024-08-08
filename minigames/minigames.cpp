@@ -32,19 +32,23 @@ void Minigames::printMinigames(const string& name, const string& description){
 void Minigames::printResult(const vector<int>& playersScore, vector<Player>& players){
     cout <<  "Results: \n" << endl;
     int num = 1;
+    int num2 =1;
     bool over = false; 
-    while (over)
+    while (!over)
     {
         for(int i = 0; i < players.size();i++){
             cout << num << ". " << players[i].getName() << " " << players[i].getScore() << " +"<< playersScore[i] << "\n" << endl;
             num += 1;
-            //pause 
+            //pause
+            players[i].setScore(players[i].getScore() + playersScore[i]);
             // player get new score by set 
         }
+
+        
         cout << " Final Results: \n " << endl;
         for(int i = 0; i < players.size();i++){
-            cout << num << ". " << players[i].getName() << " " << players[i].getScore() << " +"<< playersScore[i] << "\n" << endl;
-            num += 1;
+            cout << num2 << ". " << players[i].getName() << " " << players[i].getScore() << "\n" << endl;
+            num2 += 1;
             //pause
         }
         over = true; 
