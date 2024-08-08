@@ -1,7 +1,5 @@
 #include <iostream> 
 #include <fstream>
-#include <stdlib.h>
-#include <time.h> 
 
 #include "map.h"
 #include "enemy.h"
@@ -21,7 +19,7 @@ struct gameAssets{
 gameAssets getAssets(const Map& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer);
 void currPrint(const Map& currMap, const gameAssets&);
-int rollDice();
+int rollDie(int sides, int quantity);
 
 // Testing Functions
 Map testMap()
@@ -137,6 +135,13 @@ void testMovement(Map myMap, gameAssets assets)
         // done = true;
     }
 }
+void testDie()
+{
+    for (int i = 0; i < 100; i++)
+    {
+        cout << rollDie(6, 1) << " ";
+    }
+}
 
 int main()
 {
@@ -144,8 +149,8 @@ int main()
     Map myMap("Le map", 3, "map1.txt");
     Map revealMap("NO ONE SEE", 3, "reveal1.txt");
     gameAssets assets = getAssets(revealMap, numOfPlayers);
-
-    rollDice();
+    srand(time(0));
+    
 }
 
 gameAssets getAssets(const Map& revealMap, int numOfPlayers)
@@ -261,11 +266,14 @@ void currPrint(const Map& currMap, const gameAssets& assets)
     }
 }
 
-int rollDice()
+int rollDie(int sides, int quantity)
 {
-    int num;
-    srand (time(0));
-    num = rand() % 6 + 1;
+    int result = 0;
+    for (int i = 0; i < quantity; i++)
+    {
+        result += rand() % sides + 1;
+    }
 
-    return num;
+    return result;
 }
+
