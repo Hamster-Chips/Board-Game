@@ -8,6 +8,7 @@ class Enemy
 {
 private:
     std::string name;
+    char symbol;
     int health;
     std::vector<std::string> reward;
     int x;
@@ -15,16 +16,18 @@ private:
 
 public:
     Enemy();
-    Enemy(const std::string& name, int health, std::vector<std::string>& reward, int x, int y);
+    Enemy(const std::string& name, const char symbol, int health, std::vector<std::string>& reward, int x, int y);
     ~Enemy();
 
     std::string getName();
+    char getSymbol();
     int getHealth();
     std::vector<std::string> getReward();
     int getX();
     int getY();
 
     void setName(const std::string& name);
+    void setSymbol (const char symbol);
     void setHealth(int health);
     void setReward(std::vector<std::string> reward);
     void setX(int X);

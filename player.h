@@ -8,7 +8,7 @@ class Player
 {
 private:
     std::string name; 
-    char identifier;
+    char symbol;
     int score;
     std::vector<std::string> items; 
     int x;
@@ -16,18 +16,18 @@ private:
 
 public:
     Player();
-    Player(const std::string& name, char identifier, int score, const std::vector<std::string>& items, int x, int y);
+    Player(const std::string& name, char symbol, int score, const std::vector<std::string>& items, int x, int y);
     ~Player();
 
     std::string getName() const;
-    char getIdentifier() const;
+    char getSymbol() const;
     int getScore() const;
     std::vector<std::string> getItems() const;
     int getX() const;
     int getY() const;
 
     void setName(const std::string& name);
-    void setIdentifier(const char identifier);
+    void setSymbol(const char symbol);
     void setScore(int score);
     void setPlayerItems(const std::vector<std::string>& items);
     void setX(int x);

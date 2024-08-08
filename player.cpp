@@ -7,20 +7,20 @@ using namespace std;
 
 Player::Player() : name(""), score(0), items(), x(0), y(0) {}
 
-Player::Player(const string& name, char identifier, int score, const vector<string>& playerItems, int x, int y)
-       : name(name), identifier(identifier), score(score), items(playerItems), x(x), y(y) {};
+Player::Player(const string& name, char symbol, int score, const vector<string>& playerItems, int x, int y)
+       : name(name), symbol(symbol), score(score), items(playerItems), x(x), y(y) {};
 
 Player::~Player() {}
 
 string Player::getName() const { return name; }
-char Player::getIdentifier() const { return identifier; }
+char Player::getSymbol() const { return symbol; }
 int Player::getScore() const { return score; }
 vector<string> Player::getItems() const { return items; }
 int Player::getX() const { return x; }
 int Player::getY() const { return y; }
 
 void Player::setName(const string& name) { this->name = name; }
-void Player::setIdentifier(const char identifier) { this->identifier = identifier; }
+void Player::setSymbol(const char symbol) { this->symbol = symbol; }
 void Player::setScore(int score) { this->score = score; }
 void Player::setPlayerItems(const vector<string>& items) { this->items = items;}
 void Player::setX(int x) { this->x = x; }
@@ -47,7 +47,7 @@ void Player::printItems() const
 
 void Player::printPlayer() const
 {
-    cout << name << " (" << identifier << ")" << endl; 
+    cout << name << " (" << symbol << ")" << endl; 
     cout << "   score: " << score << endl;
 
     cout << "   items: ";
