@@ -1,5 +1,7 @@
 #include <iostream> 
 #include <fstream>
+#include <stdlib.h>
+#include <time.h> 
 
 #include "map.h"
 #include "enemy.h"
@@ -19,6 +21,7 @@ struct gameAssets{
 gameAssets getAssets(const string& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer);
 void currPrint(const Map& currMap, const gameAssets&);
+int rollDice();
 
 int main()
 {
@@ -223,4 +226,13 @@ void currPrint(const Map& currMap, const gameAssets& assets)
         }
         cout << endl;
     }
+}
+
+int rollDice()
+{
+    int num;
+    srand (time(0));
+    num = rand() % 6 + 1;
+
+    return 0;
 }
