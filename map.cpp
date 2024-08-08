@@ -13,19 +13,21 @@ Map::Map(int mapNum){
     this->loadMap(mapNum);
 }
 
-//Map::Map(const string& name, int mapNum, const std::string& filename)
-   // : name(name), mapNum(mapNum) { loadMap(filename); }
+Map::Map(const string& name, int mapNum)
+    : name(name) { loadMap(mapNum); }
+
+    /*ask brian if he still wants to loadmap by name or by number: Map(const string& name, int mapNum, const std::string& filename)
+    : name(name) { loadMap(mapNum);  or Map::Map(const string& name, int mapNum, const std::string& filename)
+    : name(name) { loadMap(filename); }*/
 
 Map::~Map() {}
 
 string Map::getName() const { return name; }
 
-//int Map::getMapNum() const { return mapNum; }
 vector<vector<char>> Map::getMapData() const { return mapData; }
 
 void Map::setName(const string& name) { this->name = name; }
-//void Map::setMapNum(int mapNum) { this->mapNum = mapNum; }
-//void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = mapData; }
+
 
 
 
@@ -81,83 +83,36 @@ bool Map::loadMap(int fileNum)
     return true;
 }
 
-/*bool Map::loadMap(const string& filename)
-{
-    widthX= 0;
-    lengthY = 0;
+void Map::printMap(std::vector<Player>& Players){
+    
+    for (int row = 0; row < mapData.size(); row++){
+        for (int col = 0; col < mapData[0].size();col++){
+            bool flag = false;
 
-    ifstream file(filename);
-    if (!file.is_open())
-    {
-        cerr << "Failed to open file: " << filename << endl;
-        return false;
-    }
-
-    string line;
-    vector<vector<char>> tempMap;
-    while (getline(file, line))
-    {
-        vector<char> row;
-        for (char c : line)
-        {
-            if (c == '.' || c == 'O' || c == '@')
-            {
-                widthX += 1;
-                row.push_back(c);
+            for (int i = 0; i < Players.size(); i++){
+                vector<int> p_loc = Players[i].getPlayerLoc();
+                
+                if (col == p_loc[0] && row == p_loc[1]){ //get each player loc, each player associated with an ascii value, 
+                    std::cout << char(i+42);                 // if both players land on same spot print both players locations
+                    flag = true;
+                }   
             }
-            else
-            {
-                cerr << "Unexpected character in map file: " << c << endl;
-                return false;
-            }
+        
+
+            if ((mapData[row][col] == 'S'|| mapData[row][col] == 'E'|| mapData[row][col] == 'P' ||mapData[row][col] == '.') && !flag){
+                std::cout << '.';
+            }else if (( mapData[row][col] == 'O'||mapData[row][col] == 'F')&& !flag){
+                std::cout << 'O';
+                }
+
         }
-        lengthY += 1;
-        tempMap.push_back(row);
+        
+        std::cout << endl;
+
     }
-
-    widthX /= lengthY;
-    mapData = tempMap;
-    file.close();
-    return true;
-}*/
-
-
-/*void Map::printMap() const
-{
-    cout << widthX << ", " << lengthY << endl;
-    for (const vector<char>& row : mapData)
-    {
-        for (const char& cell : row)
-        {      
-            cout << cell;
-        }
-        cout << endl;
-        }
+            
+       std::cout << endl;
     }
-}*/
-
-void Map::printMap(const std::vector<int>& p_loc){
-
-//Change map to show path player can move (O's where player can move)
-    //cout << widthX << ", " << lengthY << endl;
-    for (int row = 0; row < mapData.size(); row++)
-    {
-        for (int col = 0; col < mapData[0].size();col++)
-        {
-            if (col == p_loc[0] && row == p_loc[1]){
-                cout << '*';
-                continue;
-            }
-            if (mapData[row][col] == 'S'|| mapData[row][col] == 'E'|| mapData[row][col] == 'P' ||mapData[row][col] == '.')
-            {
-                cout << '.';
-            }else if ( mapData[row][col] == 'O'||mapData[row][col] == 'F'){
-                cout << 'O';
-            }
-        }
-        cout << endl;
-    }
-}
 
 
 vector<int> Map::getStartLoc(){
@@ -176,4 +131,125 @@ int Map::getLengthY() const{
     return lengthY;
 }
 
+
+
+
+char Map::moveDown(Player& tempPlayer){
+
+    vector<int> playerLoc_ = tempPlayer.getPlayerLoc();
+
+    
+    if (playerLoc_[1] +1 <= lengthY-1){ //if player next move is within bounds
+        int futureYLoc = playerLoc_[1] +1;
+        char charAtLoc = mapData[futureYLoc][playerLoc_[0]]; // get char at the future location
+        
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+
+        }else if(charAtLoc == 'O') {
+            playerLoc_[1] +=1;
+            tempPlayer.setPlayerLoc(playerLoc_);
+            //std::cout << exodus.getPlayerLoc()[1] << endl;
+            std::cout << '\n' << endl;
+
+            
+
+        }else{
+            std::cout<< "You cannot move there."<<endl;
+        }
+        
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+
+    }
+    return '0';
+}
+
+char Map::moveUp(Player& tempPlayer){
+
+    vector<int> playerLoc_ = tempPlayer.getPlayerLoc();
+
+
+    if (playerLoc_[1] -1 >=0){ //if player next move is within bounds
+        int futureYLoc = playerLoc_[1] -1;
+        char charAtLoc = mapData[futureYLoc][playerLoc_[0]]; // get char at the future location
+        
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+
+        }else if(charAtLoc == 'O') {
+            playerLoc_[1] -=1;
+            tempPlayer.setPlayerLoc(playerLoc_);
+            std::cout << '\n' << endl;
+
+            
+
+        }else{
+            std::cout<< "You cannot move there."<<endl;
+        }
+        
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+
+    }
+    return '0';
+}
+
+char Map::moveLeft(Player& tempPlayer){
+
+    vector<int> playerLoc_ = tempPlayer.getPlayerLoc();
+
+    if (playerLoc_[0] -1 >= 0){ //if player next move is within bounds
+        int futureXLoc = playerLoc_[0] -1;
+        char charAtLoc = mapData[playerLoc_[1]][futureXLoc]; // get char at the future location
+
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+
+        }else if(charAtLoc == 'O') {
+            playerLoc_[0] -=1;
+            tempPlayer.setPlayerLoc(playerLoc_);
+            std::cout << '\n' << endl;
+
+        }else{ 
+            std::cout<< "You cannot move there."<<endl;
+        }
+
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+
+    }
+    return '0';
+}
+
+char Map::moveRight(Player& tempPlayer){
+
+    vector<int> playerLoc_ = tempPlayer.getPlayerLoc();
+
+    if (playerLoc_[0] +1 <= widthX){ //if player next move is within bounds
+        int futureXLoc = playerLoc_[0] +1;
+        char charAtLoc = mapData[playerLoc_[1]][futureXLoc]; // get char at the future location
+
+        if (charAtLoc == 'F'){
+            return charAtLoc;
+
+
+        }else if(charAtLoc == 'O') {
+            playerLoc_[0] +=1;
+            tempPlayer.setPlayerLoc(playerLoc_);
+            std::cout << '\n' << endl;
+
+        }else{ 
+            std::cout<< "You cannot move there."<<endl;
+        }
+
+    }else{
+        std::cout<< "You cannot move there."<<endl;
+
+    }
+    return '0';
+}
 

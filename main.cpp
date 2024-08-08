@@ -15,69 +15,46 @@ int main()
 {
 
     Player exodus;
+    Player MOP;
+    Player Lebron;
+    Player Jordan;
+    MOP.setName("Movement of The People");
     exodus.setName("Exodus");
-    exodus.setScore(0);
-    exodus.add_items("hi");
 
-    Map playerMap(exodus.getCurMapNum());
-    playerMap.printMap(exodus.getPlayerLoc());
-    //exodus.moveDown();
-
-    std::cout << '\n' << endl;
-    int input = 0;
-    while (input != 5){
-        std::cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "-1 to quit\n" << endl;
-        cin >> input;
-        if (input == 1){
-            exodus.moveUp();
-            
-        }else if(input == 2){
-            exodus.moveDown();
-            
-        }else if(input == 3){
-            exodus.moveRight();
-            
-        }else if(input == 4){
-            exodus.moveLeft();
-        }
-        std::cout << endl;
-    }
+    vector<Player> ListOfPlayers = {exodus,MOP,Lebron,Jordan};
     
+    
+    Map playerMap("Lebron's World", 1);
+    playerMap.printMap(ListOfPlayers);
 
 
-}
-
-/*void setMap(const string& name, int mapNum, const string& pathMap)
-{
-    Map myMap(name, 3, "map3.txt");
-
-    ifstream file(pathMap);
-    if (!file.is_open())
-    {
-        cerr << "Failed to open file: " << pathMap << endl;
-        return;
-    }
-
-    string line;
-    vector<vector<char>> tempMap;
-    vector<Enemy> enemies;
-    vector<string> rewards = {"gold", "item"};
-    int x = 0;
-    int y = 0;
-    while (getline(file, line))
-    {
-        vector<char> row;
-        for (char c : line)
-        {
-            if (c == '@')
-            {
-                Enemy newEnemy("wack", 10, rewards, x, y);
-                enemies.push_back(newEnemy);
+    for (int i = 0; i < ListOfPlayers.size(); i ++){
+        Player& tempPlayer = ListOfPlayers[i];
+        int input = 0;
+        while (input != 5){
+            std::cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "5 To move to next players turn\n" << endl;
+            cin >> input;
+            if (input == 1){
+                playerMap.moveUp(tempPlayer);
+                playerMap.printMap(ListOfPlayers);
+                
+            }else if(input == 2){
+                playerMap.moveDown(ListOfPlayers[i]);
+                playerMap.printMap(ListOfPlayers);
+                
+            }else if(input == 3){
+                playerMap.moveRight(tempPlayer);
+                playerMap.printMap(ListOfPlayers);
+                
+            }else if(input == 4){
+                playerMap.moveLeft(tempPlayer);
+                playerMap.printMap(ListOfPlayers);
             }
-            x += 1;
+            std::cout << endl;
         }
-        y += 1;
-        x = 0;
-    }
+        std::cout <<'\n'<< endl;
+        playerMap.printMap(ListOfPlayers);
 
-}*/
+    }
+}
+    

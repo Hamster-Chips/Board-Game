@@ -14,7 +14,7 @@
             int score;
             std::vector<std::string> playerItems; 
             std::vector<int> playerLoc;
-            int curMapNum;
+            
 
 
         public:
@@ -39,13 +39,8 @@
 
             std::vector<int> getPlayerLoc();
             void setPlayerLoc(std::vector<int> newLoc);
-            char moveUp();
-            char moveDown();
-            char moveLeft();
-            char moveRight();
-            int getCurMapNum();
-            void setCurMapNum(int tempNum);
-
+            
+            
 
     };
 
