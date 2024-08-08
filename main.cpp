@@ -18,8 +18,9 @@ struct gameAssets{
 
 gameAssets getAssets(const Map& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer);
-void currPrint(const Map& currMap, const gameAssets&);
+void currPrint(const Map& currMap, const gameAssets& assets);
 int rollDie(int sides, int quantity);
+bool* direction(bool checkAround[4], vector<vector<char>>& mapData, int curr_X, int curr_Y);
 
 // Testing Functions
 Map testMap()
@@ -150,7 +151,7 @@ int main()
     Map revealMap("NO ONE SEE", 3, "reveal1.txt");
     gameAssets assets = getAssets(revealMap, numOfPlayers);
     srand(time(0));
-    
+
 }
 
 gameAssets getAssets(const Map& revealMap, int numOfPlayers)
@@ -195,6 +196,31 @@ gameAssets getAssets(const Map& revealMap, int numOfPlayers)
     return asset;
 }
 
+bool* direction(bool checkAround[4], vector<vector<char>>& mapData, int curr_X, int curr_Y)
+{
+    if (mapData[--curr_Y][curr_X] == 'O')
+        checkAround[0] = true;
+    else
+       checkAround[0] = false; 
+
+    if (mapData[++curr_Y][curr_X] == 'O')
+        checkAround[1] = true;
+    else
+       checkAround[1] = false; 
+
+    if (mapData[curr_Y][--curr_X] == 'O')
+        checkAround[2] = true;
+    else
+       checkAround[2] = false; 
+
+    if (mapData[curr_Y][++curr_X] == 'O')
+        checkAround[3] = true;
+    else
+       checkAround[3] = false; 
+
+    return checkAround;
+}
+
 bool move(Map& currMap, Player& currPlayer)
 {
     /*
@@ -202,19 +228,28 @@ bool move(Map& currMap, Player& currPlayer)
         2. Down
         3. Left
         4. Right
+
+        1̶.̶ ̶U̶p (X)
+        2̶.̶ ̶D̶o̶w̶n (X)
+        3̶.̶ ̶L̶e̶f̶t (X)
+        4̶.̶ ̶R̶i̶g̶h̶t (X)
     */
-
-    int direction = 0;
-    cout << "1. Up\n2. Down\n3. Left\n4. Right" << endl;
-    cout << "choice: ";
-    cin >> direction;
-    cout << endl;
-
     vector<vector<char>> mapData = currMap.getMapData();
     int curr_X = currPlayer.getX();
     int curr_Y = currPlayer.getY();
 
-    switch (direction)
+    int movement = rollDie(6, 1);
+
+
+    bool checkAround[4]; // {Up, Down, Left, Right}
+    direction(checkAround, mapData, curr_X, curr_Y);
+
+    int choice = 0;
+    cout << "choice: ";
+    cin >> choice;
+    cout << endl;
+
+    switch (choice)
     {
         case 1:
             if (mapData[--curr_Y][curr_X] == '.')
