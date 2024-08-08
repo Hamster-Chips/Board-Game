@@ -47,6 +47,7 @@
         "fstream": "cpp",
         "cstdarg": "cpp",
         "sstream": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "chrono": "cpp"
     }
 }

@@ -2,7 +2,6 @@
 #define TERMINAL_UTILS_H
 
 
-#include <vector>
 #include <string>
 
 //terminal utils
@@ -13,10 +12,10 @@
             TerminalUtils();
             ~TerminalUtils();
 
-            void clear_terminal() const ;
+            void clearTerminal() const ;
             void pause() const ;
-            void delay_print(const std::string& text, double delay = 0.04) const;
-            std::string delay_input(const std::string& text, double delay = 0.04) const;
+            void delayPrint(const std::string& text, double delay = 0.04) const;
+            std::string delayInput(const std::string& text, double delay = 0.04) const;
             void delay(double delay = 0.01) const; 
     };
 
