@@ -24,7 +24,7 @@ void Enemy::setY(int y) { this->y = y; }
 
 void Enemy::printEnemy()
 {
-    cout << name << endl; 
+    cout << name << " (" << symbol << ")" << endl; 
     cout << "   health: " << health << endl;
 
     cout << "   rewards: ";

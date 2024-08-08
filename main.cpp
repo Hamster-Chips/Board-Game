@@ -18,75 +18,99 @@ struct gameAssets{
     vector<Enemy> enemies;
 };
 
-gameAssets getAssets(const string& revealMap, int numOfPlayers);
+gameAssets getAssets(const Map& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer);
 void currPrint(const Map& currMap, const gameAssets&);
 int rollDice();
 
-int main()
+// Testing Functions
+Map testMap()
 {
-    // cout << "TESTING enemy ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    // vector<Enemy> enemies;
-    // vector<string> rewards = {"gold", "item"};
-    // int health = 100;
+    cout << "TESTING map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    Map myMap("Le map", 3, "map1.txt");
+    myMap.printMap();
+    cout << endl;
 
-    // Enemy enemy1("enemy1", '*', health, rewards, -1, -1);
-    // enemies.push_back(enemy1);
-
-    // Enemy enemy2;
-    // enemy2.setName("enemy2");
-    // enemy2.setSymbol('*');
-    // enemy2.setHealth(health);
-    // enemy2.setReward(rewards);
-    // enemy2.setX(-1);
-    // enemy2.setY(-1);
-    // enemies.push_back(enemy2);
-
-    // vector<Enemy> enemies = makeEnemy("reveal3.txt");
-    // for (Enemy enemy : enemies)
-    //     enemy.printEnemy();
-    // cout << endl;
-
-    // cout << "TESTING player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    // vector<Player> players;
-    // vector<string> items ({"gun", "taxes", "loan"});
-
-    // Player player1("Player 1", '%', 69, items, 1, 1);
-    // player1.printPlayer();
-    // players.push_back(player1);
-    // cout << endl;
-    // players.push_back(player1);
-
-    // Player player2;
-    // player2.setName("Player 2");
-    // player2.setSymbol('$');
-    // player2.setScore(1);
-    // player2.setPlayerItems(items);
-    // player2.setX(1);
-    // player2.setY(1);
-    // player2.removeItems("gun");
-    // player2.addItems("depressed");
-    // player2.printPlayer();
-    // players.push_back(player2);
-    // cout << endl;
-    // players.push_back(player2);
-
-    // cout << "TESTING map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    // Map myMap("Le map", 3, "map1.txt");
-    // myMap.printMap();
-    // cout << endl;
-
-    // myMap.loadMap("map2.txt");
-    // myMap.printMap();
-    // cout << endl;
+    myMap.loadMap("map2.txt");
+    myMap.printMap();
+    cout << endl;
     
-    // myMap.loadMap("map3.txt");
-    // myMap.printMap();
-    // cout << endl;
+    myMap.loadMap("map3.txt");
+    myMap.printMap();
+    cout << endl;
 
-    // cout << "TESTING movement ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    Map myMap("Le map", 1, "map1.txt");
-    gameAssets assets = getAssets("reveal1.txt", 2);
+    myMap.loadMap("map1.txt");
+
+    return myMap;
+}
+vector<Enemy> testEnemy()
+{
+    cout << "TESTING enemy ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    vector<Enemy> enemies;
+    vector<string> rewards = {"gold", "item"};
+    int health = 100;
+
+    Enemy enemy1("enemy1", '*', health, rewards, -1, -1);
+    enemies.push_back(enemy1);
+
+    Enemy enemy2;
+    enemy2.setName("enemy2");
+    enemy2.setSymbol('*');
+    enemy2.setHealth(health);
+    enemy2.setReward(rewards);
+    enemy2.setX(-1);
+    enemy2.setY(-1);
+    enemies.push_back(enemy2);
+
+    return enemies;
+}
+vector<Player> testPlayer()
+{
+    cout << "TESTING player ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    vector<Player> players;
+    vector<string> items ({"gun", "taxes", "loan"});
+
+    Player player1("Player 1", '%', 69, items, 1, 1);
+    player1.printPlayer();
+    players.push_back(player1);
+    cout << endl;
+    players.push_back(player1);
+
+    Player player2;
+    player2.setName("Player 2");
+    player2.setSymbol('$');
+    player2.setScore(1);
+    player2.setPlayerItems(items);
+    player2.setX(1);
+    player2.setY(1);
+    player2.removeItems("gun");
+    player2.addItems("depressed");
+    player2.printPlayer();
+    players.push_back(player2);
+    cout << endl;
+    players.push_back(player2);
+
+    return players;
+}
+void testGameAsset(gameAssets assets)
+{
+    cout << "Players: " << endl;
+    for (Player p : assets.players)
+    {
+        p.printPlayer();
+    }
+    cout << endl;
+
+    cout << "Enemies: " << endl;
+    for (Enemy e : assets.enemies)
+    {
+        e.printEnemy();
+    }
+    cout << endl;
+}
+void testMovement(Map myMap, gameAssets assets)
+{
+    cout << "TESTING movement ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     bool done = false;
     while (!done)
     {
@@ -114,10 +138,18 @@ int main()
     }
 }
 
-gameAssets getAssets(const string& revealMap, int numOfPlayers)
+int main()
 {
-    ifstream file(revealMap);
+    int numOfPlayers = 2;
+    Map myMap("Le map", 3, "map1.txt");
+    Map revealMap("NO ONE SEE", 3, "reveal1.txt");
+    gameAssets assets = getAssets(revealMap, numOfPlayers);
 
+    rollDice();
+}
+
+gameAssets getAssets(const Map& revealMap, int numOfPlayers)
+{
     vector<Player> players;
     int score = 0;
     vector<string> items = {"gun", "taxes", "loan"};
@@ -128,22 +160,24 @@ gameAssets getAssets(const string& revealMap, int numOfPlayers)
 
     int x = 0;
     int y = 0;
-    string line;
-    while (getline(file, line))
+
+    vector<vector<char>> mapData = revealMap.getMapData();
+
+    for (int i = 0; i < revealMap.getLengthY(); i++)
     {
-        for (char c : line)
+        for (int j = 0; j < revealMap.getWidthX(); j++)
         {
-            if (c == '@')
+            if (mapData[i][j] == '@')
             {
                 Enemy newEnemy("wack", '*', health, rewards, x, y);
                 enemies.push_back(newEnemy);
             }
-            else if (c == '1' || c == '2' || c == '3' || c == '4')
+            else if (mapData[i][j] == '1' || mapData[i][j] == '2' || mapData[i][j] == '3' || mapData[i][j] == '4')
             {
-                int num = c - '0';
+                int num = mapData[i][j] - '0';
                 if (numOfPlayers >= num)
                 {
-                    Player newPlayer("name", c, score, items, x, y);
+                    Player newPlayer("name", mapData[i][j], score, items, x, y);
                     players.push_back(newPlayer);
                 }
             }
@@ -152,7 +186,6 @@ gameAssets getAssets(const string& revealMap, int numOfPlayers)
         y += 1;
         x = 0;
     }
-
     gameAssets asset = {players, enemies};
     return asset;
 }
@@ -234,5 +267,5 @@ int rollDice()
     srand (time(0));
     num = rand() % 6 + 1;
 
-    return 0;
+    return num;
 }
