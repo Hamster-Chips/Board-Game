@@ -1,14 +1,11 @@
-#include "terminal_utils.h"
 #include <iostream>
-#include <thread>
+#include <windows.h>
 #include <chrono>
 
 using namespace std;
 
-TerminalUtils::TerminalUtils() {}
-TerminalUtils::~TerminalUtils() {}
 
-void TerminalUtils::clearTerminal() const {
+void clearTerminal() {
     #ifdef _WIN32
         system("cls");
     #else
@@ -16,27 +13,27 @@ void TerminalUtils::clearTerminal() const {
     #endif
 }
 
-void TerminalUtils::pause() const {
+void pause() {
     cout << "Press Enter to continue..." << endl;
     cin.get();
 }
 
-void TerminalUtils::delayPrint(const string& text, double delay = 0.04) const{
+void delayPrint(const string& text, double delayTime = 0.04) {
     for (const char& c : text) {
         cout << c << flush;
-        this_thread::sleep_for(chrono::milliseconds(static_cast<int>(delay * 1000)));
+        Sleep(static_cast<int>(delayTime * 1000));
 
     }
     cout << endl;
 }
 
-string TerminalUtils::delayInput(const string& text, double delay = 0.04) const{
-    delayPrint(text, delay);
+string delayInput(const string& text, double delayTime = 0.04) {
+    delayPrint(text, delayTime);
     string input;
     getline(std::cin, input);
     return input;
 }
 
-void TerminalUtils::delay(double delay) const {
-    this_thread::sleep_for(chrono::milliseconds(static_cast<int>(delay * 1000)));
+void delay(double delayTime) {
+    Sleep(static_cast<int>(delayTime * 1000));
 }

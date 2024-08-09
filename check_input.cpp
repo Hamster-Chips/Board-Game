@@ -1,4 +1,3 @@
-#include "check_input.h"
 #include <iostream>
 #include <limits>
 #include <string>
@@ -7,10 +6,8 @@
 
 using namespace std;
 
-CheckInput::CheckInput() {}
-CheckInput::~CheckInput() {}
 
-int CheckInput::rangeInt(const string& text, int min, int max) const {
+int rangeInt(const string& text, int min, int max) {
     int num = 0;
     bool valid = false;
 
