@@ -243,36 +243,58 @@ bool move(Map& currMap, Player& currPlayer)
 
     bool checkAround[4]; // {Up, Down, Left, Right}
     direction(checkAround, mapData, curr_X, curr_Y);
-
-    int choice = 0;
-    cout << "choice: ";
-    cin >> choice;
-    cout << endl;
-
-    switch (choice)
+    int choice = -1;
+    bool check = false;
+    while (!check)
     {
-        case 1:
-            if (mapData[--curr_Y][curr_X] == '.')
-                return false;
-            currPlayer.setY(curr_Y);
-            break;
-        case 2:
-            if (mapData[++curr_Y][curr_X] == '.')
-                return false;
-            currPlayer.setY(curr_Y);
-            break;
-        case 3:
-            if (mapData[curr_Y][--curr_X] == '.')
-                return false;
-            currPlayer.setX(curr_X);
-            break;
-        case 4:
-            if (mapData[curr_Y][++curr_X] == '.')
-                return false;
-            currPlayer.setX(curr_X);
-            break;
+        checkAround[0] ? cout << "1. Up" : cout << "1̶.̶ ̶U̶p (X)";
+        checkAround[1] ? cout << "2. Down" : cout << "2̶.̶ ̶D̶o̶w̶n (X)";
+        checkAround[2] ? cout << "3. Left" : cout << "3̶.̶ ̶L̶e̶f̶t (X)";
+        checkAround[3] ? cout << "4. Right" : cout << "4̶.̶ ̶R̶i̶g̶h̶t (X)";
+
+        cout << "choice: ";
+        cin >> choice;
+        cout << endl;
+
+        if (checkAround[--choice])
+        {
+            check = true;
+        }
+        else
+        {
+            cout << "You cannot go that direction" << endl;
+            choice = -1;
+        }
+
     }
 
+    bool doneMoving = false;
+    while (!doneMoving)
+    {
+        switch (choice)
+        {
+            case 1:
+                if (mapData[--curr_Y][curr_X] == '.')
+                    doneMoving = true;
+                currPlayer.setY(curr_Y);
+                break;
+            case 2:
+                if (mapData[++curr_Y][curr_X] == '.')
+                    doneMoving = true;
+                currPlayer.setY(curr_Y);
+                break;
+            case 3:
+                if (mapData[curr_Y][--curr_X] == '.')
+                    doneMoving = true;
+                currPlayer.setX(curr_X);
+                break;
+            case 4:
+                if (mapData[curr_Y][++curr_X] == '.')
+                    doneMoving = true;
+                currPlayer.setX(curr_X);
+                break;
+        }
+    }
     return true;
 }
 
