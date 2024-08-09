@@ -1,4 +1,5 @@
 #include <iostream>
+#include "terminal_utils.h"
 #include <windows.h>
 #include <chrono>
 
@@ -30,7 +31,7 @@ void delayPrint(const string& text, double delayTime = 0.04) {
 string delayInput(const string& text, double delayTime = 0.04) {
     delayPrint(text, delayTime);
     string input;
-    getline(std::cin, input);
+    getline(cin, input);
     return input;
 }
 

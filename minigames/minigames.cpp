@@ -1,4 +1,5 @@
 #include "minigames.h"
+#include "../terminal_utils.h"
 #include <iostream>
 #include <algorithm>
 #include <fstream>
@@ -40,6 +41,7 @@ void Minigames::printResult(const vector<int>& playersScore, vector<Player>& pla
             cout << num << ". " << players[i].getName() << " " << players[i].getScore() << " +"<< playersScore[i] << "\n" << endl;
             num += 1;
             //pause
+            //pause();
             players[i].setScore(players[i].getScore() + playersScore[i]);
             // player get new score by set 
         }

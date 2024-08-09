@@ -4,11 +4,12 @@
 #include "enemy.h"
 #include "minigames/minigames.h"
 #include "player.h"
+#include "terminal_utils.h"
 using namespace std;
 
 /*
     Notes for myself:
-    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
+    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp terminal_utils.h terminal_utils.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
 */
 
 int main()
@@ -23,6 +24,7 @@ int main()
     Player player4("Dave", 0, lays);
     vector<Player> player ({player1,player2,player3,player4});
     rollndie.printResult(score, player);
+    
     
 
 }
