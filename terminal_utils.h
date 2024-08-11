@@ -7,6 +7,6 @@ void clearTerminal();
 void pause();
 void delayPrint(const std::string& text, double delayTime = 0.04);
 std::string delayInput(const std::string& text, double delayTime = 0.04);
-void delay(double delayTime);
+void delay(double delayTime = 5);
 
 #endif
