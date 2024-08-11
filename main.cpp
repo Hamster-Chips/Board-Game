@@ -25,13 +25,7 @@ int main()
     Player player3("brain", 0, lays);
     Player player4("Dave", 0, lays);
     vector<Player> player ({player1,player2,player3,player4});
-    string boo = "are you old are you 1-10?\n";
-    int min = 1;
-    int max = 10;
-    rangeInt(boo,min, max); 
     rollndie.printResult(score, player);
-    delay();
-    cout << "Hello World!" << endl;
     
 }
 
