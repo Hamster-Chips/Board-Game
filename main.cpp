@@ -4,18 +4,19 @@
 #include "enemy.h"
 #include "minigames/minigames.h"
 #include "player.h"
-#include "terminal_utils.h"
+#include "check_input.h"
 using namespace std;
 
 /*
     Notes for myself:
-    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp terminal_utils.h terminal_utils.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
+    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp check_input.h check_input.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
 */
 
 int main()
 {
     Minigames rollndie;
     cout << "Hello World!" << endl;
+
     vector<string> lays ({"BOO", "hi"});
     vector<int> score ({10, 0, 30, 50});
     Player player1("jorge", 0, lays);
@@ -23,6 +24,10 @@ int main()
     Player player3("brain", 0, lays);
     Player player4("Dave", 0, lays);
     vector<Player> player ({player1,player2,player3,player4});
+    string boo = "are you old are you 1-10?\n";
+    int min = 1;
+    int max = 10;
+    rangeInt(boo,min, max); 
     rollndie.printResult(score, player);
     
     

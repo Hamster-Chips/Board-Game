@@ -1,4 +1,5 @@
 #include <iostream>
+#include "check_input.h"
 #include <limits>
 #include <string>
 #include <algorithm>
