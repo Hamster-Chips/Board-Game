@@ -6,6 +6,7 @@
 #include <string>
 
 
+
 // player
     class Player{
 
@@ -18,6 +19,7 @@
 
 
         public:
+        
             Player();
             Player(const std::string& name, int score, const std::vector<std::string>& playerItems);
             ~Player();
@@ -42,6 +44,11 @@
             
             
 
+
+            void addItems(const std::string& playerItems);
+            void removeItems(const std::string& items);
+            void printItems() const;
+      
     };
 
 #endif

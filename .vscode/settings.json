@@ -45,6 +45,12 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "fstream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "cstdarg": "cpp",
+        "sstream": "cpp",
+        "thread": "cpp",
+        "chrono": "cpp",
+        "ctime": "cpp",
+        "ratio": "cpp"
     }
 }
