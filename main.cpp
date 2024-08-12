@@ -9,6 +9,29 @@ using namespace std;
 
 /*
     clear; g++ -o main.exe main.cpp map.cpp enemy.cpp player.cpp; ./main.exe
+
+    Things to do:
+        Movement - won't stop if a direction becomes open somewhere midway when going a certain direction
+            Ex. ...........     ...........
+                .OOOOOOOOO.     .OOOOOOOOO.
+                .O.......O.     .O.......O.
+                .OOOOOO..O.     .OOOOOO..O.
+                .O....O..O.     .O....O..O.
+                .O....O..O.     .O....O..O.
+                .1OOOOOOOO.     .OOOOOOOO1.
+                ...........     ...........
+                Going right     Goes all the way to the right
+
+                ...........     ...........
+                .OOOOOOOOO.     .OOOOOOOOO.
+                .O.......O.     .O.......O.
+                .OOOOOO..O.     .OOOOOO..O.
+                .O....O..O.     .O....O..O.
+                .O....O..O.     .O....O..O.
+                .1OOOOOOOO.     .OOOOO1OOO.
+                ...........     ...........
+                What we want to happen instead
+
 */
 
 struct gameAssets{
@@ -20,7 +43,7 @@ gameAssets getAssets(const Map& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer);
 void currPrint(const Map& currMap, const gameAssets& assets);
 int rollDie(int sides, int quantity);
-bool* direction(bool checkAround[4], vector<vector<char>>& mapData, int curr_X, int curr_Y);
+bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int curr_Y);
 
 // Testing Functions
 Map testMap()
@@ -113,7 +136,6 @@ void testMovement(Map myMap, gameAssets assets)
     bool done = false;
     while (!done)
     {
-        int choice = -1;
         for (Player& p : assets.players)
         {
             cout << p.getName() <<"'s turn [" << p.getSymbol() << "]" << endl;
@@ -151,6 +173,8 @@ int main()
     Map revealMap("NO ONE SEE", 3, "reveal1.txt");
     gameAssets assets = getAssets(revealMap, numOfPlayers);
     srand(time(0));
+
+    testMovement(myMap, assets);
 
 }
 
@@ -196,29 +220,33 @@ gameAssets getAssets(const Map& revealMap, int numOfPlayers)
     return asset;
 }
 
-bool* direction(bool checkAround[4], vector<vector<char>>& mapData, int curr_X, int curr_Y)
+bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int curr_Y)
 {
     if (mapData[--curr_Y][curr_X] == 'O')
-        checkAround[0] = true;
+        curr_dir[0] = true;
     else
-       checkAround[0] = false; 
+       curr_dir[0] = false; 
+    ++curr_Y;
 
     if (mapData[++curr_Y][curr_X] == 'O')
-        checkAround[1] = true;
+        curr_dir[1] = true;
     else
-       checkAround[1] = false; 
+       curr_dir[1] = false; 
+    --curr_Y;
 
     if (mapData[curr_Y][--curr_X] == 'O')
-        checkAround[2] = true;
+        curr_dir[2] = true;
     else
-       checkAround[2] = false; 
+       curr_dir[2] = false; 
+    ++curr_X;
 
     if (mapData[curr_Y][++curr_X] == 'O')
-        checkAround[3] = true;
+        curr_dir[3] = true;
     else
-       checkAround[3] = false; 
+       curr_dir[3] = false; 
+    --curr_X;
 
-    return checkAround;
+    return curr_dir;
 }
 
 bool move(Map& currMap, Player& currPlayer)
@@ -239,20 +267,18 @@ bool move(Map& currMap, Player& currPlayer)
     int curr_Y = currPlayer.getY();
 
     int movement = rollDie(6, 1);
-
-
-    bool checkAround[4]; // {Up, Down, Left, Right}
-    direction(checkAround, mapData, curr_X, curr_Y);
+    bool curr_dir[4] = {false, false, false, false};
+    bool* checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
     int choice = -1;
     bool check = false;
     while (!check)
     {
-        checkAround[0] ? cout << "1. Up" : cout << "1̶.̶ ̶U̶p (X)";
-        checkAround[1] ? cout << "2. Down" : cout << "2̶.̶ ̶D̶o̶w̶n (X)";
-        checkAround[2] ? cout << "3. Left" : cout << "3̶.̶ ̶L̶e̶f̶t (X)";
-        checkAround[3] ? cout << "4. Right" : cout << "4̶.̶ ̶R̶i̶g̶h̶t (X)";
+        checkAround[0] ? cout << "1. Up" : cout << "\n1. Cannot go there (X)";
+        checkAround[1] ? cout << "\n2. Down" : cout << "\n2. Cannot go there (X)";
+        checkAround[2] ? cout << "\n3. Left" : cout << "\n3. Cannot go there (X)";
+        checkAround[3] ? cout << "\n4. Right" : cout << "\n4. Cannot go there (X)";
 
-        cout << "choice: ";
+        cout << "\nchoice: ";
         cin >> choice;
         cout << endl;
 
@@ -268,6 +294,7 @@ bool move(Map& currMap, Player& currPlayer)
 
     }
 
+    ++choice;
     bool doneMoving = false;
     while (!doneMoving)
     {
@@ -276,22 +303,26 @@ bool move(Map& currMap, Player& currPlayer)
             case 1:
                 if (mapData[--curr_Y][curr_X] == '.')
                     doneMoving = true;
-                currPlayer.setY(curr_Y);
+                else
+                    currPlayer.setY(curr_Y);
                 break;
             case 2:
                 if (mapData[++curr_Y][curr_X] == '.')
                     doneMoving = true;
-                currPlayer.setY(curr_Y);
+                else
+                    currPlayer.setY(curr_Y);
                 break;
             case 3:
                 if (mapData[curr_Y][--curr_X] == '.')
                     doneMoving = true;
-                currPlayer.setX(curr_X);
+                else
+                    currPlayer.setX(curr_X);
                 break;
             case 4:
                 if (mapData[curr_Y][++curr_X] == '.')
                     doneMoving = true;
-                currPlayer.setX(curr_X);
+                else
+                    currPlayer.setX(curr_X);
                 break;
         }
     }
