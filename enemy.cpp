@@ -1,5 +1,7 @@
 #include "enemy.h"
 #include <iostream>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -18,7 +20,7 @@ int Enemy::getY() { return y; }
 void Enemy::setName(const string& name) { this->name = name; }
 void Enemy::setSymbol (const char symbol) { this->symbol = symbol; }
 void Enemy::setHealth(int health) { this->health = health; }
-void Enemy::setReward(std::vector<std::string> reward) { this->reward = reward; }
+void Enemy::setReward(std::vector<std::string>& reward) { this->reward = reward; }
 void Enemy::setX(int x) { this->x = x; }
 void Enemy::setY(int y) { this->y = y; }
 
@@ -39,5 +41,12 @@ void Enemy::printEnemy()
     
 }
 
+void Enemy::bfs(const std::vector<std::vector<char>>& mapData ,const std::vector<Player>& player){
 
+}
+
+void Enemy::targetPlayer(const std::vector<Player>& players){
+
+
+}
 // work on enemy object finding nearest player object and moving there

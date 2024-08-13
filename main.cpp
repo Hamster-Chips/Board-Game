@@ -28,7 +28,7 @@ int main()
     vector<Player> player ({player1,player2,player3,player4});
     rollndie.printResult(score, player);
     
-}
+
 
     Player exodus;
     Player MOP;
@@ -48,7 +48,7 @@ int main()
         Player& tempPlayer = ListOfPlayers[i];
         int input = 0;
         while (input != 5){
-            std::cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "5 To move to next players turn\n" << endl;
+            cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "5 To move to next players turn\n" << endl;
             cin >> input;
             if (input == 1){
                 playerMap.moveUp(tempPlayer);
@@ -66,9 +66,9 @@ int main()
                 playerMap.moveLeft(tempPlayer);
                 playerMap.printMap(ListOfPlayers);
             }
-            std::cout << endl;
+            cout << endl;
         }
-        std::cout <<'\n'<< endl;
+        cout <<'\n'<< endl;
         playerMap.printMap(ListOfPlayers);
 
     }

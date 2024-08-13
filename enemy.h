@@ -3,6 +3,9 @@
 
 #include <string>
 #include <vector>
+#include "player.h"
+#include "map.h"
+
 
 class Enemy
 {
@@ -29,11 +32,13 @@ public:
     void setName(const std::string& name);
     void setSymbol (const char symbol);
     void setHealth(int health);
-    void setReward(std::vector<std::string> reward);
+    void setReward(std::vector<std::string>& reward);
     void setX(int X);
     void setY(int Y);
 
     void printEnemy();
+    void bfs(const std::vector<std::vector<char>>& mapData ,const std::vector<Player>& player);
+    void targetPlayer(const std::vector<Player>& players);
 };
 
 #endif
