@@ -40,10 +40,11 @@ struct gameAssets{
 };
 
 gameAssets getAssets(const Map& revealMap, int numOfPlayers);
-bool move(Map& currMap, Player& currPlayer);
+bool move(Map& currMap, Player& currPlayer, gameAssets& assets);
 void currPrint(const Map& currMap, const gameAssets& assets);
 int rollDie(int sides, int quantity);
 bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int curr_Y);
+int pickDirection(bool* checkAround);
 
 // Testing Functions
 Map testMap()
@@ -130,20 +131,21 @@ void testGameAsset(gameAssets assets)
     }
     cout << endl;
 }
-void testMovement(Map myMap, gameAssets assets)
+void testMovement(Map& myMap, gameAssets& assets)
 {
     cout << "TESTING movement ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     bool done = false;
-    while (!done)
+    for (int i = 0; i < 10; i++)
     {
+        cout << "MOVE: " << i << endl;
         for (Player& p : assets.players)
         {
             cout << p.getName() <<"'s turn [" << p.getSymbol() << "]" << endl;
             bool moved = false;
             while (!moved)
             {
-                currPrint(myMap, assets);
-                if (move(myMap, p))
+                // currPrint(myMap, assets);
+                if (move(myMap, p, assets))
                 {
                     cout << p.getX() << ", " << p.getY() << endl;
                     moved = true;
@@ -153,9 +155,8 @@ void testMovement(Map myMap, gameAssets assets)
                     cout << "You cannot go that way... Try again" << endl;
                 }
             }
+            cout << "DONE MOVING" << endl;
         }
-
-        // done = true;
     }
 }
 void testDie()
@@ -249,26 +250,8 @@ bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int
     return curr_dir;
 }
 
-bool move(Map& currMap, Player& currPlayer)
+int pickDirection(bool* checkAround)
 {
-    /*
-        1. Up
-        2. Down
-        3. Left
-        4. Right
-
-        1̶.̶ ̶U̶p (X)
-        2̶.̶ ̶D̶o̶w̶n (X)
-        3̶.̶ ̶L̶e̶f̶t (X)
-        4̶.̶ ̶R̶i̶g̶h̶t (X)
-    */
-    vector<vector<char>> mapData = currMap.getMapData();
-    int curr_X = currPlayer.getX();
-    int curr_Y = currPlayer.getY();
-
-    int movement = rollDie(6, 1);
-    bool curr_dir[4] = {false, false, false, false};
-    bool* checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
     int choice = -1;
     bool check = false;
     while (!check)
@@ -293,37 +276,83 @@ bool move(Map& currMap, Player& currPlayer)
         }
 
     }
+    return ++choice;
+}
 
-    ++choice;
+bool move(Map& currMap, Player& currPlayer, gameAssets& assets)
+{
+    /*
+        1. Up
+        2. Down
+        3. Left
+        4. Right
+    */
+    vector<vector<char>> mapData = currMap.getMapData();
+    int curr_X = currPlayer.getX();
+    int curr_Y = currPlayer.getY();
+
+    int movement = rollDie(6, 1);
+    bool curr_dir[4] = {false, false, false, false};
+    currPrint(currMap, assets);
+    bool* checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
+    int choice = pickDirection(checkAround);
     bool doneMoving = false;
+    // bool newDirecton = false;
     while (!doneMoving)
     {
+        currPrint(currMap, assets);
         switch (choice)
         {
             case 1:
                 if (mapData[--curr_Y][curr_X] == '.')
+                {
+                    ++curr_Y;
                     doneMoving = true;
+                }
                 else
                     currPlayer.setY(curr_Y);
                 break;
             case 2:
                 if (mapData[++curr_Y][curr_X] == '.')
+                {
+                    --curr_Y;
                     doneMoving = true;
+                }
                 else
                     currPlayer.setY(curr_Y);
                 break;
             case 3:
                 if (mapData[curr_Y][--curr_X] == '.')
+                {
+                    ++curr_X;
                     doneMoving = true;
+                }
                 else
                     currPlayer.setX(curr_X);
                 break;
             case 4:
                 if (mapData[curr_Y][++curr_X] == '.')
+                {
+                    --curr_X;
                     doneMoving = true;
+                }
                 else
                     currPlayer.setX(curr_X);
                 break;
+        }
+
+        checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
+        int count = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (checkAround[i])
+                count++;
+        }
+
+        if (count >= 3)
+        {
+            currPrint(currMap, assets);
+            choice = pickDirection(checkAround);
         }
     }
     return true;
