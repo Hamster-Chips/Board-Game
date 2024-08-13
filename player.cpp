@@ -2,13 +2,18 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include "map.h"
 
 using namespace std; 
 
-Player::Player() : name(""), score(0), playerItems() {}
+Player::Player() : name(""), score(0), playerItems(), playerLoc({0,0}){};
 
 Player::Player(const string& name, int score, const vector<string>& playerItems)
-       : name(name), score(score), playerItems(playerItems) {};
+       : name(name), score(score), playerItems(playerItems) 
+    {
+        //added for map class functionality
+        this->playerLoc = {0,0};
+    };
 
 Player::~Player() {}
 
@@ -63,3 +68,14 @@ void Player::printItems() const{
 //     return 0; 
 
 // }
+
+//added for map class functionality
+std::vector<int> Player::getPlayerLoc(){
+    return playerLoc;
+}
+
+//added for map class functionality
+void Player::setPlayerLoc(std::vector<int> newLoc){
+    this-> playerLoc = newLoc;
+    std::cout << "playerLoc[1]: " << playerLoc[1] << endl;
+}

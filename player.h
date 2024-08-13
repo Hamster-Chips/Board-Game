@@ -14,6 +14,8 @@
             std::string name; 
             int score;
             std::vector<std::string> playerItems; 
+            std::vector<int> playerLoc;
+            
 
 
         public:
@@ -25,6 +27,9 @@
             std::string getName() const;
             int getScore() const;
             std::vector<std::string> getPlayerItems() const;
+            
+            
+
 
             void setName(const std::string& name);
             void setScore(int score);
@@ -33,7 +38,13 @@
             void addItems(const std::string& playerItems);
             void removeItems(const std::string& items);
             void printItems() const;
-      
+
+
+            std::vector<int> getPlayerLoc();
+            void setPlayerLoc(std::vector<int> newLoc);
+            
+            
+
     };
 
 #endif
