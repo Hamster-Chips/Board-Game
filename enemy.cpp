@@ -86,8 +86,6 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
             }
         }
     }
-
-
 }
 
 void Enemy::targetPlayer(const std::vector<Player>& players){

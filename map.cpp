@@ -1,6 +1,7 @@
 #include "map.h"
 #include <iostream>
 #include <fstream>
+#include "enemy.h"
 
 
 using namespace std;
@@ -84,20 +85,24 @@ bool Map::loadMap(int fileNum)
 }
 
 void Map::printMap(std::vector<Player>& Players){
-    
+    Enemy poop;
+    poop.setX(6);
+    poop.setY(5);
+    std::cout << '$';
     for (int row = 0; row < mapData.size(); row++){
         for (int col = 0; col < mapData[0].size();col++){
             bool flag = false;
+            bool once = true; 
 
             for (int i = 0; i < Players.size(); i++){
                 vector<int> p_loc = Players[i].getPlayerLoc();
                 
-                if (col == p_loc[0] && row == p_loc[1]){ //get each player loc, each player associated with an ascii value, 
+                if (col == p_loc[0] && row == p_loc[1]){ //get each player loc, each player associated with an ascii value,
+
                     std::cout << char(i+42);                 // if both players land on same spot print both players locations
                     flag = true;
-                }   
+                }
             }
-        
 
             if ((mapData[row][col] == 'S'|| mapData[row][col] == 'E'|| mapData[row][col] == 'P' ||mapData[row][col] == '.') && !flag){
                 std::cout << '.';

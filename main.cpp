@@ -17,7 +17,7 @@ using namespace std;
 int main()
 {
     Minigames rollndie;
-    cout << "Hello World!" << endl;
+    std::cout << "Hello World!" << endl;
 
     vector<string> lays ({"BOO", "hi"});
     vector<int> score ({10, 0, 30, 50});
@@ -27,7 +27,7 @@ int main()
     Player player4("Dave", 0, lays,0,0);
     vector<Player> player ({player1,player2,player3,player4});
     rollndie.printResult(score, player);
-    
+    Enemy Lays;
 
 
     Player exodus;
@@ -42,13 +42,14 @@ int main()
     
     Map playerMap("Lebron's World", 1);
     playerMap.printMap(ListOfPlayers);
+    Lays.bfs(playerMap.getMapData(),player);
 
 
     for (int i = 0; i < ListOfPlayers.size(); i ++){
         Player& tempPlayer = ListOfPlayers[i];
         int input = 0;
         while (input != 5){
-            cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "5 To move to next players turn\n" << endl;
+            std::cout << "1. To move up " << '\n' << "2. To move down" << '\n'<< "3. To move right" << '\n'<< "4. To move left" << '\n'<< "5 To move to next players turn\n" << endl;
             cin >> input;
             if (input == 1){
                 playerMap.moveUp(tempPlayer);
@@ -66,9 +67,9 @@ int main()
                 playerMap.moveLeft(tempPlayer);
                 playerMap.printMap(ListOfPlayers);
             }
-            cout << endl;
+            std::cout << endl;
         }
-        cout <<'\n'<< endl;
+        std::cout <<'\n'<< endl;
         playerMap.printMap(ListOfPlayers);
 
     }
