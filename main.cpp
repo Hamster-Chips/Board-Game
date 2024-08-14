@@ -11,26 +11,7 @@ using namespace std;
     clear; g++ -o main.exe main.cpp map.cpp enemy.cpp player.cpp; ./main.exe
 
     Things to do:
-        Movement - won't stop if a direction becomes open somewhere midway when going a certain direction
-            Ex. ...........     ...........
-                .OOOOOOOOO.     .OOOOOOOOO.
-                .O.......O.     .O.......O.
-                .OOOOOO..O.     .OOOOOO..O.
-                .O....O..O.     .O....O..O.
-                .O....O..O.     .O....O..O.
-                .1OOOOOOOO.     .OOOOOOOO1.
-                ...........     ...........
-                Going right     Goes all the way to the right
-
-                ...........     ...........
-                .OOOOOOOOO.     .OOOOOOOOO.
-                .O.......O.     .O.......O.
-                .OOOOOO..O.     .OOOOOO..O.
-                .O....O..O.     .O....O..O.
-                .O....O..O.     .O....O..O.
-                .1OOOOOOOO.     .OOOOO1OOO.
-                ...........     ...........
-                What we want to happen instead
+        
 
 */
 
@@ -40,7 +21,7 @@ struct gameAssets{
 };
 
 gameAssets getAssets(const Map& revealMap, int numOfPlayers);
-bool move(Map& currMap, Player& currPlayer, gameAssets& assets);
+bool move(Map& currMap, Player& currPlayer, gameAssets& assets, int movement);
 void currPrint(const Map& currMap, const gameAssets& assets);
 int rollDie(int sides, int quantity);
 bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int curr_Y);
@@ -141,11 +122,15 @@ void testMovement(Map& myMap, gameAssets& assets)
         for (Player& p : assets.players)
         {
             cout << p.getName() <<"'s turn [" << p.getSymbol() << "]" << endl;
+
+            int movement = rollDie(6, 1);
+            cout << "rolled a " << movement << endl;
+
             bool moved = false;
             while (!moved)
             {
                 // currPrint(myMap, assets);
-                if (move(myMap, p, assets))
+                if (move(myMap, p, assets, movement))
                 {
                     cout << p.getX() << ", " << p.getY() << endl;
                     moved = true;
@@ -279,7 +264,7 @@ int pickDirection(bool* checkAround)
     return ++choice;
 }
 
-bool move(Map& currMap, Player& currPlayer, gameAssets& assets)
+bool move(Map& currMap, Player& currPlayer, gameAssets& assets, int movement)
 {
     /*
         1. Up
@@ -291,56 +276,73 @@ bool move(Map& currMap, Player& currPlayer, gameAssets& assets)
     int curr_X = currPlayer.getX();
     int curr_Y = currPlayer.getY();
 
-    int movement = rollDie(6, 1);
     bool curr_dir[4] = {false, false, false, false};
     currPrint(currMap, assets);
     bool* checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
     int choice = pickDirection(checkAround);
     bool doneMoving = false;
-    // bool newDirecton = false;
+    bool forceTurn = false;
     while (!doneMoving)
     {
-        currPrint(currMap, assets);
+        cout << "Movement: " << movement << endl;
+        if (movement <= 1)
+        {
+            doneMoving = true;
+        }
+
         switch (choice)
         {
             case 1:
                 if (mapData[--curr_Y][curr_X] == '.')
                 {
                     ++curr_Y;
-                    doneMoving = true;
+                    forceTurn = true;
                 }
                 else
+                {
                     currPlayer.setY(curr_Y);
+                    --movement;
+                }
                 break;
             case 2:
                 if (mapData[++curr_Y][curr_X] == '.')
                 {
                     --curr_Y;
-                    doneMoving = true;
+                    forceTurn = true;
                 }
                 else
+                {
                     currPlayer.setY(curr_Y);
+                    --movement;
+                }
                 break;
             case 3:
                 if (mapData[curr_Y][--curr_X] == '.')
                 {
                     ++curr_X;
-                    doneMoving = true;
+                    forceTurn = true;
                 }
                 else
+                {
                     currPlayer.setX(curr_X);
+                    --movement;
+                }
                 break;
             case 4:
                 if (mapData[curr_Y][++curr_X] == '.')
                 {
                     --curr_X;
-                    doneMoving = true;
+                    forceTurn = true;
                 }
                 else
+                {
                     currPlayer.setX(curr_X);
+                    --movement;
+                }
                 break;
         }
 
+        currPrint(currMap, assets);
         checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
         int count = 0;
         for (int i = 0; i < 4; i++)
@@ -349,10 +351,11 @@ bool move(Map& currMap, Player& currPlayer, gameAssets& assets)
                 count++;
         }
 
-        if (count >= 3)
+        if (count >= 3 || forceTurn)
         {
             currPrint(currMap, assets);
             choice = pickDirection(checkAround);
+            forceTurn = false;
         }
     }
     return true;
