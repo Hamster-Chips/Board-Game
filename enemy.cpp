@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include "player.h"
 
 using namespace std;
 
@@ -41,7 +42,51 @@ void Enemy::printEnemy()
     
 }
 
-void Enemy::bfs(const std::vector<std::vector<char>>& mapData ,const std::vector<Player>& player){
+void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Player>& players){
+    struct Position {
+        int x, y, distance;
+    };
+    queue<Position> q;
+    vector<vector<bool>> visited(mapData.size(), vector<bool>(mapData[0].size(), false));
+
+    int startX = this->getX();
+    int startY = this->getY();
+
+    q.push({startX, startY, 0});
+    visited[startY][startX] = true;
+
+    while (!q.empty()) {
+        Position current = q.front();
+        q.pop();
+
+        int dx[] = {0, 0, -1, 1};
+        int dy[] = {-1, 1, 0, 0};
+
+        for (int i = 0; i < 4; i++) {
+            int newX = current.x + dx[i];
+            int newY = current.y + dy[i];
+
+            if (newX >= 0 && newX < mapData[0].size() && newY >= 0 && newY < mapData.size()) {
+                if (!visited[newY][newX]) {
+                    visited[newY][newX] = true;
+
+                    // Check if this position matches a player's location
+                    for (Player& playersLoc: players) {
+                        if (playersLoc.getX() == newX && playersLoc.getY() == newY) {
+                            // Nearest player found
+                            cout << "Nearest player found at (" << newX << ", " << newY << ") distance: " << current.distance + 1 << endl;
+                            return; // Stop searching after finding the player
+                        }
+                    }
+
+                    if (mapData[newY][newX] == '.') {
+                        q.push({newX, newY, current.distance + 1});
+                    }
+                }
+            }
+        }
+    }
+
 
 }
 

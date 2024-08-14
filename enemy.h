@@ -37,7 +37,7 @@ public:
     void setY(int Y);
 
     void printEnemy();
-    void bfs(const std::vector<std::vector<char>>& mapData ,const std::vector<Player>& player);
+    void bfs(const std::vector<std::vector<char>>& mapData , std::vector<Player>& players);
     void targetPlayer(const std::vector<Player>& players);
 };
 

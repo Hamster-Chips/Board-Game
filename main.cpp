@@ -21,10 +21,10 @@ int main()
 
     vector<string> lays ({"BOO", "hi"});
     vector<int> score ({10, 0, 30, 50});
-    Player player1("jorge", 0, lays);
-    Player player2("brain", 0, lays);
-    Player player3("brain", 0, lays);
-    Player player4("Dave", 0, lays);
+    Player player1("jorge", 0, lays,0,0);
+    Player player2("brain", 0, lays,0,0);
+    Player player3("brain", 0, lays,0,0);
+    Player player4("Dave", 0, lays,0,0);
     vector<Player> player ({player1,player2,player3,player4});
     rollndie.printResult(score, player);
     
