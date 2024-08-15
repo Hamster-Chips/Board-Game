@@ -8,9 +8,17 @@
 using namespace std;
 
 /*
-    clear; g++ -o main.exe main.cpp map.cpp enemy.cpp player.cpp; ./main.exe
+    clear; g++ -o main.exe main.cpp map.h map.cpp enemy.h enemy.cpp player.h player.cpp; ./main.exe
 
     Things to do:
+        Movement class
+        Bank class
+        Map spaces
+        Ally bots
+        Enemy
+        Mini games
+        ...
+        Integrate code to Unreal 
         
 
 */
