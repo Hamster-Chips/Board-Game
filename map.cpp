@@ -1,7 +1,7 @@
 #include "map.h"
 #include <iostream>
 #include <fstream>
-#include "enemy.h"
+
 
 
 using namespace std;
@@ -84,11 +84,9 @@ bool Map::loadMap(int fileNum)
     return true;
 }
 
-void Map::printMap(std::vector<Player>& Players){
-    Enemy poop;
-    poop.setX(6);
-    poop.setY(5);
-    std::cout << '$';
+void Map::printMap(std::vector<Player>& Players, Enemy& evil){
+
+
     for (int row = 0; row < mapData.size(); row++){
         for (int col = 0; col < mapData[0].size();col++){
             bool flag = false;
@@ -102,6 +100,11 @@ void Map::printMap(std::vector<Player>& Players){
                     std::cout << char(i+42);                 // if both players land on same spot print both players locations
                     flag = true;
                 }
+            }
+
+            if (!flag && col == evil.getX() && row == evil.getY()) {
+                std::cout << '$';  // Print enemy symbol
+                flag = true;
             }
 
             if ((mapData[row][col] == 'S'|| mapData[row][col] == 'E'|| mapData[row][col] == 'P' ||mapData[row][col] == '.') && !flag){

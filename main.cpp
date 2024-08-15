@@ -26,8 +26,10 @@ int main()
     Player player3("brain", 0, lays,0,0);
     Player player4("Dave", 0, lays,0,0);
     vector<Player> player ({player1,player2,player3,player4});
-    rollndie.printResult(score, player);
+    //rollndie.printResult(score, player);
     Enemy Lays;
+    Lays.setX(5);
+    Lays.setY(4);
 
 
     Player exodus;
@@ -41,8 +43,10 @@ int main()
     
     
     Map playerMap("Lebron's World", 1);
-    playerMap.printMap(ListOfPlayers);
+    playerMap.printMap(ListOfPlayers, Lays);
+    std::cout << "Calling BFS..." << std::endl;
     Lays.bfs(playerMap.getMapData(),player);
+    pause();
 
 
     for (int i = 0; i < ListOfPlayers.size(); i ++){
@@ -53,24 +57,24 @@ int main()
             cin >> input;
             if (input == 1){
                 playerMap.moveUp(tempPlayer);
-                playerMap.printMap(ListOfPlayers);
+                playerMap.printMap(ListOfPlayers,Lays);
                 
             }else if(input == 2){
                 playerMap.moveDown(ListOfPlayers[i]);
-                playerMap.printMap(ListOfPlayers);
+                playerMap.printMap(ListOfPlayers,Lays);
                 
             }else if(input == 3){
                 playerMap.moveRight(tempPlayer);
-                playerMap.printMap(ListOfPlayers);
+                playerMap.printMap(ListOfPlayers,Lays);
                 
             }else if(input == 4){
                 playerMap.moveLeft(tempPlayer);
-                playerMap.printMap(ListOfPlayers);
+                playerMap.printMap(ListOfPlayers,Lays);
             }
             std::cout << endl;
         }
         std::cout <<'\n'<< endl;
-        playerMap.printMap(ListOfPlayers);
+        playerMap.printMap(ListOfPlayers,Lays);
 
     }
 }

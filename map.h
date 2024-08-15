@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include "player.h"
+#include "enemy.h"
+
+
 
 class Map 
 {
@@ -38,7 +41,7 @@ public:
     
 
 
-    void printMap(std::vector<Player>& Players);
+    void printMap(std::vector<Player>& Players, Enemy& evil);
 
     bool loadMap(int fileNum);
     char moveUp(Player& tempPlayer);

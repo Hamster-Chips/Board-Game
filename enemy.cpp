@@ -43,6 +43,7 @@ void Enemy::printEnemy()
 }
 
 void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Player>& players){
+    std::cout << " IN BFS..." << std::endl;
     struct Position {
         int x, y, distance;
     };
@@ -51,13 +52,17 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
 
     int startX = this->getX();
     int startY = this->getY();
+    std::cout << "Enemy starting at position (" << startX << ", " << startY << ")" << endl;
 
     q.push({startX, startY, 0});
     visited[startY][startX] = true;
 
+    std::cout << "Enemy starting at position (" << startX << ", " << startY << ")" << endl;
+
     while (!q.empty()) {
         Position current = q.front();
         q.pop();
+        cout << "Processing position (" << current.x << ", " << current.y << "), distance: " << current.distance << endl;
 
         int dx[] = {0, 0, -1, 1};
         int dy[] = {-1, 1, 0, 0};
@@ -69,10 +74,13 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
             if (newX >= 0 && newX < mapData[0].size() && newY >= 0 && newY < mapData.size()) {
                 if (!visited[newY][newX]) {
                     visited[newY][newX] = true;
+                    std::cout << "Moving to new position (" << newX << ", " << newY << ")" << endl;
+                    
 
                     // Check if this position matches a player's location
-                    for (Player& playersLoc: players) {
-                        if (playersLoc.getX() == newX && playersLoc.getY() == newY) {
+                    for (Player& player: players) {
+                        cout << "Player at (" << player.getX() << ", " << player.getY() << ")" << endl;
+                        if (player.getX() == newX && player.getY() == newY) {
                             // Nearest player found
                             cout << "Nearest player found at (" << newX << ", " << newY << ") distance: " << current.distance + 1 << endl;
                             return; // Stop searching after finding the player
@@ -86,6 +94,8 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
             }
         }
     }
+    std::cout << "No player found in BFS search." << std::endl;
+
 }
 
 void Enemy::targetPlayer(const std::vector<Player>& players){
