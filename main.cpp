@@ -168,7 +168,10 @@ int main()
     gameAssets assets = getAssets(revealMap, numOfPlayers);
     srand(time(0));
 
-    testMovement(myMap, assets);
+    cout << "5, 6: " << myMap.getMapData()[5][6] << endl;
+
+    cout << "6, 5: "<< myMap.getMapData()[6][5] << endl;
+
 
 }
 

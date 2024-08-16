@@ -3,30 +3,34 @@
 
 #include "player.h"
 #include "map.h"
+#include "rolldie.h"
 
 #include <vector>
 
 class Movement
 {
 private:
-    std::vector<Player> players;
+    Player curr_player;
     Map playingMap;
-    int moves;
+    RollDie dice;
+    int move;
+    bool checkAround [4];
 
 public:
     Movement();
-    Movement(std::vector<Player>& players, Map& playingMap, int moves);
+    Movement(Player& player, Map& playingMap, RollDie& dice);
     ~Movement();
 
-    std::vector<Player> getPlayers() const;
+    Player getPlayers() const;
     Map getPlayingMap() const;
-    int getMoves() const;
+    int getMove() const;
 
-    void setPlayers(const std::vector<Player>& players);
+    void setPlayers(const Player& players);
     void setPlayingMap(const Map& newMap);
-    void setMoves(int num);
+    void setMove(int num);
 
-    
+    void direction();
+    int pickDirection();
 
     void printMove() const;
 };
