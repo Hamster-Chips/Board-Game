@@ -1,18 +1,8 @@
 #include <iostream> 
 #include <fstream>
-
+#include <ctime>
 #include "map.h"
-#include "player.h"
 #include "enemy.h"
-#include "minigames/minigames.h"
-#include "player.h"
-#include "check_input.h"
-#include "terminal_utils.h"
-using namespace std;
-
-/*
-    Notes for myself:
-    To run put in the cmd like: g++ -o main.exe map.h map.cpp enemy.h enemy.cpp main.cpp player.h player.cpp check_input.h check_input.cpp terminal_utils.h terminal_utils.cpp minigames/minigames.cpp minigames/minigames.h (enter) ./main.exe
 #include "player.h"
 
 using namespace std;
@@ -414,4 +404,3 @@ int rollDie(int sides, int quantity)
 
     return result;
 }
-
