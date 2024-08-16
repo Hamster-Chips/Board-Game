@@ -166,9 +166,11 @@ int main()
     Map myMap("Le map", 3, "map1.txt");
     Map revealMap("NO ONE SEE", 3, "reveal1.txt");
     gameAssets assets = getAssets(revealMap, numOfPlayers);
+    
     srand(time(0));
+    assets.enemies[0].bfs(myMap.getMapData(), assets.players);
 
-    testMovement(myMap, assets);
+    //testMovement(myMap, assets);
 
 }
 

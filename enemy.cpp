@@ -52,7 +52,6 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
 
     int startX = this->getX();
     int startY = this->getY();
-    std::cout << "Enemy starting at position (" << startX << ", " << startY << ")" << endl;
 
     q.push({startX, startY, 0});
     visited[startY][startX] = true;
@@ -94,8 +93,6 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
             }
         }
     }
-    std::cout << "No player found in BFS search." << std::endl;
-
 }
 
 void Enemy::targetPlayer(const std::vector<Player>& players){

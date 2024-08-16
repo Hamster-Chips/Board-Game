@@ -1,8 +1,8 @@
-S..........
-OOOOOOOOOO.
-OO.OOOO..O.
+...........
+.OOOOOOOOO.
+.O.......O.
 .OOOOOO..O.
 .O....O..O.
 .O....O..O.
-.OOOOOOOOF.
+.OOOOOOOOO.
 ...........
