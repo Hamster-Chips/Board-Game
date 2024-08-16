@@ -27,7 +27,7 @@ void Enemy::setY(int y) { this->y = y; }
 
 void Enemy::printEnemy()
 {
-    cout << name << endl; 
+    cout << name << " (" << symbol << ")" << endl; 
     cout << "   health: " << health << endl;
 
     cout << "   rewards: ";
@@ -103,3 +103,4 @@ void Enemy::targetPlayer(const std::vector<Player>& players){
 
 }
 // work on enemy object finding nearest player object and moving there
+

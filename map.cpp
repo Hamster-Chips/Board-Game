@@ -6,6 +6,7 @@
 
 using namespace std;
 
+Map::Map() : name(""), mapNum(0), widthX(0), lengthY(0) {}
 
 Map::Map(){
     this->loadMap(1);
@@ -26,9 +27,23 @@ Map::~Map() {}
 string Map::getName() const { return name; }
 
 vector<vector<char>> Map::getMapData() const { return mapData; }
+int Map::getWidthX() const { return widthX; }
+int Map::getLengthY() const { return lengthY; }
 
 void Map::setName(const string& name) { this->name = name; }
 
+void Map::printMap() const
+{
+    // cout << widthX << ", " << lengthY << endl;
+    for (int i = 0; i < lengthY; i++)
+    {
+        for (int j = 0; j < widthX; j++)
+        {
+            cout << mapData[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 
 
@@ -75,6 +90,8 @@ bool Map::loadMap(int fileNum)
                 cerr << "Unexpected character in map file: " << c << endl;
                 return false;
             }
+            row.push_back(c);
+            widthX += 1;
         }
         lengthY += 1;
         tempMap.push_back(row);
