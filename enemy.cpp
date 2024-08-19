@@ -86,7 +86,7 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
                         }
                     }
 
-                    if (mapData[newY][newX] == '.') {
+                    if (mapData[newY][newX] == 'O') {
                         q.push({newX, newY, current.distance + 1});
                     }
                 }
