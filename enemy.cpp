@@ -75,7 +75,6 @@ void Enemy::bfs(const std::vector<std::vector<char>>& mapData , std::vector<Play
                     visited[newY][newX] = true;
                     std::cout << "Moving to new position (" << newX << ", " << newY << ")" << endl;
                     
-
                     // Check if this position matches a player's location
                     for (Player& player: players) {
                         cout << "Player at (" << player.getX() << ", " << player.getY() << ")" << endl;
