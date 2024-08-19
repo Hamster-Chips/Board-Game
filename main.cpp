@@ -4,6 +4,8 @@
 #include "map.h"
 #include "enemy.h"
 #include "player.h"
+#include "movement.h"
+#include "rolldie.h"
 
 using namespace std;
 
@@ -20,6 +22,8 @@ using namespace std;
         ...
         Integrate code to Unreal 
         
+    Possible Problem:
+        Map class have to add the reveal txt file 
 
 */
 
@@ -165,12 +169,11 @@ int main()
     int numOfPlayers = 2;
     Map myMap("Le map", 3, "map1.txt");
     Map revealMap("NO ONE SEE", 3, "reveal1.txt");
-    gameAssets assets = getAssets(revealMap, numOfPlayers);
+    // gameAssets assets = getAssets(revealMap, numOfPlayers);
     srand(time(0));
-
-    cout << "5, 6: " << myMap.getMapData()[5][6] << endl;
-
-    cout << "6, 5: "<< myMap.getMapData()[6][5] << endl;
+    
+    RollDie die(1, 6);
+    Movement moo(Player& player, Map& playingMap, RollDie& dice);
 
 
 }

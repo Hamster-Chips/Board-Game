@@ -32,7 +32,7 @@ public:
     void setMapNum(int mapNum);
     void setDimension(const std::vector<std::vector<char>> mapData);
 
-    void getAssets(int numOfPlayers);
+    void getAssets(int numOfPlayers, std::string fileName);
 
     void printMap() const;
     bool loadMap(const std::string& filename);

@@ -53,7 +53,7 @@ bool Map::loadMap(const string& filename)
     return true;
 }
 
-void Map::getAssets(int numOfPlayers)
+void Map::getAssets(int numOfPlayers, string fileName)
 {
     // Player dummy value
     int score = 0;
@@ -72,7 +72,7 @@ void Map::getAssets(int numOfPlayers)
         {
             if (mapData[i][j] == '@')
             {
-                Enemy newEnemy("wack", '*', health, rewards, x, y);
+                Enemy newEnemy("wack", '@', health, rewards, x, y);
                 enemies.push_back(newEnemy);
             }
             else if (mapData[i][j] == '1' || mapData[i][j] == '2' || mapData[i][j] == '3' || mapData[i][j] == '4')
@@ -83,6 +83,12 @@ void Map::getAssets(int numOfPlayers)
                     Player newPlayer("name", mapData[i][j], score, items, x, y);
                     players.push_back(newPlayer);
                 }
+                else // Test
+                {
+                    mapData[i][j] = 'O';
+                }
+
+
             }
             x += 1;
         }
