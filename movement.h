@@ -13,7 +13,7 @@ private:
     Player curr_player;
     Map playingMap;
     RollDie dice;
-    int move;
+    int moves;
     bool checkAround [4];
 
 public:
@@ -23,14 +23,15 @@ public:
 
     Player getPlayers() const;
     Map getPlayingMap() const;
-    int getMove() const;
+    int getMoves() const;
 
     void setPlayers(const Player& players);
     void setPlayingMap(const Map& newMap);
-    void setMove(int num);
+    void setMoves(int num);
 
     void direction();
     int pickDirection();
+    void go();
 
     void printMove() const;
 };

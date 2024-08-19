@@ -9,11 +9,11 @@ Movement::~Movement() {}
 
 Player Movement::getPlayers() const { return curr_player; }
 Map Movement::getPlayingMap() const { return playingMap; }
-int Movement::getMove() const { return move; }
+int Movement::getMoves() const { return moves; }
 
 void Movement::setPlayers(const Player& player) { this->curr_player = player; }
 void Movement::setPlayingMap(const Map& newMap) { this->playingMap = newMap; } 
-void Movement::setMove(int num) { this->move = num; }
+void Movement::setMoves(int num) { this->moves = num; }
 
 void Movement::direction()
 {
@@ -76,105 +76,97 @@ int Movement::pickDirection()
     return ++choice;
 }
 
-// bool move(Map& currMap, Player& currPlayer, gameAssets& assets, int movement)
-// {
-//     /*
-//         1. Up
-//         2. Down
-//         3. Left
-//         4. Right
-//     */
-//     vector<vector<char>> mapData = currMap.getMapData();
-//     int curr_X = currPlayer.getX();
-//     int curr_Y = currPlayer.getY();
+void Movement::go()
+{
+    vector<vector<char>> mapData = playingMap.getMapData();
+    int curr_X = curr_player.getX();
+    int curr_Y = curr_player.getY();
+    int movement = moves;
+    playingMap.printMap();
+    direction();
+    int choice = pickDirection();
+    bool doneMoving = false;
+    bool forceTurn = false;
+    while (!doneMoving)
+    {
+        cout << "Movement: " << movement << endl;
+        if (movement <= 1)
+        {
+            doneMoving = true;
+        }
 
-//     bool curr_dir[4] = {false, false, false, false};
-//     currPrint(currMap, assets);
-//     bool* checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
-//     int choice = pickDirection(checkAround);
-//     bool doneMoving = false;
-//     bool forceTurn = false;
-//     while (!doneMoving)
-//     {
-//         cout << "Movement: " << movement << endl;
-//         if (movement <= 1)
-//         {
-//             doneMoving = true;
-//         }
+        switch (choice)
+        {
+            case 1:
+                if (mapData[--curr_Y][curr_X] == '.')
+                {
+                    ++curr_Y;
+                    forceTurn = true;
+                }
+                else
+                {
+                    curr_player.setY(curr_Y);
+                    --movement;
+                }
+                break;
+            case 2:
+                if (mapData[++curr_Y][curr_X] == '.')
+                {
+                    --curr_Y;
+                    forceTurn = true;
+                }
+                else
+                {
+                    curr_player.setY(curr_Y);
+                    --movement;
+                }
+                break;
+            case 3:
+                if (mapData[curr_Y][--curr_X] == '.')
+                {
+                    ++curr_X;
+                    forceTurn = true;
+                }
+                else
+                {
+                    curr_player.setX(curr_X);
+                    --movement;
+                }
+                break;
+            case 4:
+                if (mapData[curr_Y][++curr_X] == '.')
+                {
+                    --curr_X;
+                    forceTurn = true;
+                }
+                else
+                {
+                    curr_player.setX(curr_X);
+                    --movement;
+                }
+                break;
+        }
 
-//         switch (choice)
-//         {
-//             case 1:
-//                 if (mapData[--curr_Y][curr_X] == '.')
-//                 {
-//                     ++curr_Y;
-//                     forceTurn = true;
-//                 }
-//                 else
-//                 {
-//                     currPlayer.setY(curr_Y);
-//                     --movement;
-//                 }
-//                 break;
-//             case 2:
-//                 if (mapData[++curr_Y][curr_X] == '.')
-//                 {
-//                     --curr_Y;
-//                     forceTurn = true;
-//                 }
-//                 else
-//                 {
-//                     currPlayer.setY(curr_Y);
-//                     --movement;
-//                 }
-//                 break;
-//             case 3:
-//                 if (mapData[curr_Y][--curr_X] == '.')
-//                 {
-//                     ++curr_X;
-//                     forceTurn = true;
-//                 }
-//                 else
-//                 {
-//                     currPlayer.setX(curr_X);
-//                     --movement;
-//                 }
-//                 break;
-//             case 4:
-//                 if (mapData[curr_Y][++curr_X] == '.')
-//                 {
-//                     --curr_X;
-//                     forceTurn = true;
-//                 }
-//                 else
-//                 {
-//                     currPlayer.setX(curr_X);
-//                     --movement;
-//                 }
-//                 break;
-//         }
+        playingMap.printMap();
+        direction();
+        int count = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (checkAround[i])
+                count++;
+        }
 
-//         currPrint(currMap, assets);
-//         checkAround = direction(curr_dir, mapData, curr_X, curr_Y);
-//         int count = 0;
-//         for (int i = 0; i < 4; i++)
-//         {
-//             if (checkAround[i])
-//                 count++;
-//         }
+        if (count >= 3 || forceTurn)
+        {
+            playingMap.printMap();
+            pickDirection();
+            forceTurn = false;
+        }
+    }
 
-//         if (count >= 3 || forceTurn)
-//         {
-//             currPrint(currMap, assets);
-//             choice = pickDirection(checkAround);
-//             forceTurn = false;
-//         }
-//     }
-//     return true;
-// }
+}
 
-
-// void Movement::printMove() const
-// {
-//     cout << "Rolled " << move << endl;
-// }
+void Movement::printMove() const
+{
+    cout << "Rolled " << moves << endl;
+}

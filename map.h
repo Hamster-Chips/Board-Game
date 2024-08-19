@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include "player.h"
+#include "enemy.h"
 
 class Map 
 {
@@ -12,6 +14,8 @@ private:
     int widthX;
     int lengthY;
     std::vector<std::vector<char>> mapData;
+    std::vector<Player> players;
+    std::vector<Enemy> enemies;
 
 public:
     Map();
@@ -28,8 +32,11 @@ public:
     void setMapNum(int mapNum);
     void setDimension(const std::vector<std::vector<char>> mapData);
 
+    void getAssets(int numOfPlayers);
+
     void printMap() const;
     bool loadMap(const std::string& filename);
 };
+
 
 #endif
