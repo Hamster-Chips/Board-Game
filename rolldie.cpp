@@ -3,10 +3,10 @@
 
 using namespace std;
 
-RollDie::RollDie() : side(6), quantity(1) { srand(time(0)); }
+RollDie::RollDie() : side(6), quantity(1) {}
 
 RollDie::RollDie(int side, int quantity)
-        : side(side), quantity(quantity) { srand(time(0)); }
+        : side(side), quantity(quantity) {}
 
 RollDie::~RollDie() {}
 
@@ -18,6 +18,7 @@ void RollDie::setQuantity(int quantity) { this->quantity = quantity; }
 
 int RollDie::roll()
 {
+    srand(time(0));
     int result = 0;
     for (int i = 0; i < quantity; i++)
     {

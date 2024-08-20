@@ -10,7 +10,7 @@
 using namespace std;
 
 /*
-    clear; g++ -o main.exe main.cpp map.h map.cpp enemy.h enemy.cpp player.h player.cpp; ./main.exe
+    clear; g++ -o main.exe main.cpp map.h map.cpp enemy.h enemy.cpp player.h player.cpp movement.h movement.cpp rolldie.h rolldie.cpp; ./main.exe
 
     Things to do:
         Movement class
@@ -166,14 +166,34 @@ void testDie()
 
 int main()
 {
-    int numOfPlayers = 2;
     Map myMap("Le map", 3, "map1.txt");
-    Map revealMap("NO ONE SEE", 3, "reveal1.txt");
-    // gameAssets assets = getAssets(revealMap, numOfPlayers);
-    srand(time(0));
-    
+    int numOfPlayers = 2;
+    myMap.getAssets(numOfPlayers, "reveal1.txt");
+
     RollDie die(1, 6);
-    Movement moo(Player& player, Map& playingMap, RollDie& dice);
+    
+    Movement move(myMap.getPlayers()[0], myMap, die);
+
+    int turns = 10;
+    while (turns > 0) 
+    {   
+        int rolled = 0;
+
+        for (Player& p : myMap.getPlayers())
+        {
+            p.printPlayer();
+            cout << endl << p.getName() << "'s Turn [" << p.getSymbol() << "]" << endl;
+            move.setPlayer(p);
+
+            rolled = die.roll();
+            move.setMoves(rolled);
+            cout << "Rolled a " << rolled << endl;
+
+            move.go();
+
+        }
+        --turns;
+    }
 
 
 }

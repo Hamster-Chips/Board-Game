@@ -27,10 +27,14 @@ public:
     int getWidthX() const;
     int getLengthY() const;
     std::vector<std::vector<char>> getMapData() const;
+    std::vector<Player> getPlayers() const;
+    std::vector<Enemy> getEnemy() const;
 
     void setName(const std::string& name);
     void setMapNum(int mapNum);
-    void setDimension(const std::vector<std::vector<char>> mapData);
+    void setMapData(const std::vector<std::vector<char>>& mapData);
+    void setPlayers(const std::vector<Player>& newPlayers);
+    void setEnemies(const std::vector<Enemy>& newEnemies);
 
     void getAssets(int numOfPlayers, std::string fileName);
 

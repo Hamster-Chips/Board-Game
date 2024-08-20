@@ -3,15 +3,14 @@
 
 using namespace std;
 
-Movement::Movement() {}
-Movement::Movement(Player& curr_player, Map& playingMap, RollDie& dice) : curr_player(curr_player), playingMap(playingMap), dice(dice) {}
+Movement::Movement(Player& player, Map& playingMap, RollDie& dice) : curr_player(player), playingMap(playingMap), dice(dice) {}
 Movement::~Movement() {}
 
-Player Movement::getPlayers() const { return curr_player; }
+Player Movement::getPlayer() const { return curr_player; }
 Map Movement::getPlayingMap() const { return playingMap; }
 int Movement::getMoves() const { return moves; }
 
-void Movement::setPlayers(const Player& player) { this->curr_player = player; }
+void Movement::setPlayer(const Player& player) { this->curr_player = player; }
 void Movement::setPlayingMap(const Map& newMap) { this->playingMap = newMap; } 
 void Movement::setMoves(int num) { this->moves = num; }
 
@@ -146,7 +145,8 @@ void Movement::go()
                 }
                 break;
         }
-
+        
+        
         playingMap.printMap();
         direction();
         int count = 0;

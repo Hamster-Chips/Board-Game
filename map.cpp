@@ -16,10 +16,14 @@ int Map::getMapNum() const { return mapNum; }
 vector<vector<char>> Map::getMapData() const { return mapData; }
 int Map::getWidthX() const { return widthX; }
 int Map::getLengthY() const { return lengthY; }
+std::vector<Player> Map::getPlayers() const { return players; }
+std::vector<Enemy> Map::getEnemy() const { return enemies; } 
 
 void Map::setName(const string& name) { this->name = name; }
 void Map::setMapNum(int mapNum) { this->mapNum = mapNum; }
-void Map::setDimension(const vector<vector<char>> mapData) { this->mapData = mapData; }
+void Map::setMapData(const vector<vector<char>>& mapData) { this->mapData = mapData; }
+void Map::setPlayers(const vector<Player>& newPlayers) { this->players = newPlayers; }
+void Map::setEnemies(const vector<Enemy>& newEnemies) { this->enemies = newEnemies; }
 
 bool Map::loadMap(const string& filename)
 {
@@ -55,6 +59,19 @@ bool Map::loadMap(const string& filename)
 
 void Map::getAssets(int numOfPlayers, string fileName)
 {
+    ifstream file(fileName);
+    string line;
+    vector<vector<char>> revealData;
+    while (getline(file, line))
+    {
+        vector<char> row;
+        for (char c : line)
+        {
+            row.push_back(c);
+        }
+        revealData.push_back(row);
+    }
+
     // Player dummy value
     int score = 0;
     vector<string> items = {"gun", "taxes", "loan"};
@@ -70,25 +87,21 @@ void Map::getAssets(int numOfPlayers, string fileName)
     {
         for (int j = 0; j < widthX; j++)
         {
-            if (mapData[i][j] == '@')
+            if (revealData[i][j] == '@')
+                {
+                    Enemy newEnemy("wack", '@', health, rewards, x, y);
+                    enemies.push_back(newEnemy);
+                    // cout << "Added new enemy\n" << endl; // Test
+                }
+            else if (revealData[i][j] == '1' || revealData[i][j] == '2' || revealData[i][j] == '3' || revealData[i][j] == '4')
             {
-                Enemy newEnemy("wack", '@', health, rewards, x, y);
-                enemies.push_back(newEnemy);
-            }
-            else if (mapData[i][j] == '1' || mapData[i][j] == '2' || mapData[i][j] == '3' || mapData[i][j] == '4')
-            {
-                int num = mapData[i][j] - '0';
+                int num = revealData[i][j] - '0';
                 if (numOfPlayers >= num)
                 {
-                    Player newPlayer("name", mapData[i][j], score, items, x, y);
+                    Player newPlayer("name", revealData[i][j], score, items, x, y);
                     players.push_back(newPlayer);
+                    // cout << "Added new player\n" << endl; // Test
                 }
-                else // Test
-                {
-                    mapData[i][j] = 'O';
-                }
-
-
             }
             x += 1;
         }
