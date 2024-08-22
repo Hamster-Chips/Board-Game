@@ -32,7 +32,7 @@ struct gameAssets{
     vector<Enemy> enemies;
 };
 
-gameAssets getAssets(const Map& revealMap, int numOfPlayers);
+gameAssets getAssets(string& revealMap, int numOfPlayers);
 bool move(Map& currMap, Player& currPlayer, gameAssets& assets, int movement);
 void currPrint(const Map& currMap, const gameAssets& assets);
 int rollDie(int sides, int quantity);
@@ -40,10 +40,10 @@ bool* direction(bool curr_dir[4], vector<vector<char>>& mapData, int curr_X, int
 int pickDirection(bool* checkAround);
 
 // Testing Functions
-Map testMap()
+Map testMap(gameAssets assets)
 {
     cout << "TESTING map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    Map myMap("Le map", 3, "map1.txt");
+    Map myMap("Le map", 3, "map1.txt", assets.players, assets.enemies);
     myMap.printMap();
     cout << endl;
 
@@ -166,7 +166,9 @@ void testDie()
 
 int main()
 {
-    Map myMap("Le map", 3, "map1.txt");
+    string fileName = "reveal1.txt";
+    gameAssets assets = getAssets(fileName, 2);
+    Map myMap("Le map", 3, "map1.txt", assets.players, assets.enemies);
     int numOfPlayers = 2;
     myMap.getAssets(numOfPlayers, "reveal1.txt");
 
@@ -198,8 +200,26 @@ int main()
 
 }
 
-gameAssets getAssets(const Map& revealMap, int numOfPlayers)
+gameAssets getAssets(string& fileName, int numOfPlayers)
 {
+    int x = 0;
+    int y = 0;
+    ifstream file(fileName);
+    string line;
+    vector<vector<char>> revealData;
+    while (getline(file, line))
+    {
+        vector<char> row;
+        for (char c : line)
+        {
+            row.push_back(c);
+            x++;
+        }
+        y++;
+        x = 0;
+        revealData.push_back(row);
+    }
+    
     vector<Player> players;
     int score = 0;
     vector<string> items = {"gun", "taxes", "loan"};
@@ -208,26 +228,23 @@ gameAssets getAssets(const Map& revealMap, int numOfPlayers)
     int health = 10;
     vector<string> rewards = {"gold", "item"};
 
-    int x = 0;
-    int y = 0;
+    // vector<vector<char>> mapData = revealMap.getMapData();
 
-    vector<vector<char>> mapData = revealMap.getMapData();
-
-    for (int i = 0; i < revealMap.getLengthY(); i++)
+    for (int i = 0; i < y; i++)
     {
-        for (int j = 0; j < revealMap.getWidthX(); j++)
+        for (int j = 0; j < x; j++)
         {
-            if (mapData[i][j] == '@')
+            if (revealData[i][j] == '@')
             {
                 Enemy newEnemy("wack", '*', health, rewards, x, y);
                 enemies.push_back(newEnemy);
             }
-            else if (mapData[i][j] == '1' || mapData[i][j] == '2' || mapData[i][j] == '3' || mapData[i][j] == '4')
+            else if (revealData[i][j] == '1' || revealData[i][j] == '2' || revealData[i][j] == '3' || revealData[i][j] == '4')
             {
-                int num = mapData[i][j] - '0';
+                int num = revealData[i][j] - '0';
                 if (numOfPlayers >= num)
                 {
-                    Player newPlayer("name", mapData[i][j], score, items, x, y);
+                    Player newPlayer("name", revealData[i][j], score, items, x, y);
                     players.push_back(newPlayer);
                 }
             }

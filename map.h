@@ -14,12 +14,12 @@ private:
     int widthX;
     int lengthY;
     std::vector<std::vector<char>> mapData;
-    std::vector<Player> players;
-    std::vector<Enemy> enemies;
+    std::vector<Player>& players;
+    std::vector<Enemy>& enemies;
 
 public:
-    Map();
-    Map(const std::string& name, int mapNum, const std::string& filename);
+    // Map();
+    Map(const std::string& name, int mapNum, const std::string& filename, std::vector<Player>& players, std::vector<Enemy>& enemies);
     ~Map();
 
     std::string getName() const;

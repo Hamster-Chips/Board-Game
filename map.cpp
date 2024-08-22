@@ -4,10 +4,13 @@
 
 using namespace std;
 
-Map::Map() : name(""), mapNum(0), widthX(0), lengthY(0) {}
+// Map::Map() : name(""), mapNum(0), widthX(0), lengthY(0) {}
 
-Map::Map(const string& name, int mapNum, const std::string& filename)
-    : name(name), mapNum(mapNum) { loadMap(filename); }
+Map::Map(const string& name, int mapNum, const std::string& filename, vector<Player>& players, vector<Enemy>& enemies)
+    : name(name), mapNum(mapNum), players(players), enemies(enemies)
+    { 
+        loadMap(filename);
+    }
 
 Map::~Map() {}
 
